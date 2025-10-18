@@ -10,12 +10,20 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     libxml2-dev \
     zlib1g-dev \
-    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache
+    libicu-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
 RUN a2enmod rewrite
 
 WORKDIR /app
 COPY . /app
+
+RUN chown -R www-data:www-data /app
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
