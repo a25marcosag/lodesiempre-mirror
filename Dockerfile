@@ -26,7 +26,6 @@ COPY . /app
 RUN chown -R www-data:www-data /app
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
 
 EXPOSE 10000
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
