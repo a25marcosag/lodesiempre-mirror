@@ -1,6 +1,13 @@
 FROM php:8.2-apache
 RUN apt-get update && apt-get install -y unzip curl git libzip-dev libonig-dev sqlite3
-RUN docker-php-ext-install pdo pdo_sqlite
+RUN apt-get update && apt-get install -y \
+    unzip \
+    curl \
+    git \
+    libzip-dev \
+    libonig-dev \
+    libsqlite3-dev \
+    && docker-php-ext-install pdo_sqlite
 RUN a2enmod rewrite
 WORKDIR /app
 COPY . /app
