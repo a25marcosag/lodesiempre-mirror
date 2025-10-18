@@ -1,0 +1,43 @@
+stages:
+  - migrate
+  - deploy
+
+variables:
+  GIT_STRATEGY: fetch
+  COMPOSER_ALLOW_SUPERUSER: 1
+
+migrate_and_sync:
+  stage: migrate
+  image: php:8.2-cli
+  before_script:
+    - apt-get update && apt-get install -y unzip git curl
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  script:
+    - composer install --no-dev --optimize-autoloader
+
+    - php artisan migrate --force
+
+    - git config --global user.email "ci@example.com"
+    - git config --global user.name "GitLab CI"
+
+    - git remote remove github 2>/dev/null || true
+    - git remote add github https://$GITHUB_TOKEN@github.com/a25marcosag/lodesiempre-mirror.git
+    - git checkout -B master
+    - git add -A
+    - git commit -m "gitlab sync" || echo "Sin cambios"
+    - git push -fu github master
+  only:
+    - master
+
+deploy_to_render:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - >
+      curl -X POST "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys"
+      -H "Accept: application/json"
+      -H "Authorization: Bearer $RENDER_API_KEY"
+  only:
+    - master
+  needs:
+    - job: migrate_and_sync

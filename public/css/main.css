@@ -1,0 +1,11 @@
+img {
+    max-width: 150px;
+    height: auto;
+    object-fit: cover;
+}
+
+svg {
+    max-width: 30px;
+    height: auto;
+    object-fit: cover;
+}
