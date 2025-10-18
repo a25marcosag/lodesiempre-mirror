@@ -16,15 +16,10 @@ class AppServiceProvider extends ServiceProvider
     {
         if (!app()->runningInConsole()) {
             try {
-                // Run composer install if vendor folder does not exist
-                if (!file_exists(base_path('vendor/autoload.php'))) {
-                    passthru('php /usr/local/bin/composer install --no-dev --optimize-autoloader');
-                }
-
                 // Run migrations automatically
                 Artisan::call('migrate', ['--force' => true]);
             } catch (\Exception $e) {
-                // Optionally log exception
+                // Log or ignore exceptions
             }
         }
     }
