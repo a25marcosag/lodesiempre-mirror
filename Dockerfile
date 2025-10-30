@@ -44,10 +44,11 @@ RUN a2enmod rewrite
 
 WORKDIR /app
 COPY --from=build /app /app
-
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data /app
 
-RUN php artisan config:clear && php artisan cache:clear
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 EXPOSE 10000
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
