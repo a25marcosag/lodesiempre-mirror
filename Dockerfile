@@ -48,5 +48,6 @@ COPY --from=build /app /app
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data /app
 
+RUN php artisan config:clear && php artisan cache:clear
 EXPOSE 10000
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=10000"]
