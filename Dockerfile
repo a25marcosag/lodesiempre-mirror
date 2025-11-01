@@ -1,11 +1,6 @@
-FROM php:8.2-cli AS build
-
-WORKDIR /app
+FROM php:8.2-apache
 
 RUN apt-get update && apt-get install -y \
-    unzip \
-    curl \
-    git \
     libzip-dev \
     libonig-dev \
     libsqlite3-dev \
@@ -19,22 +14,22 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN a2enmod rewrite
 
+WORKDIR /app
 COPY . /app
-RUN composer install --no-dev --optimize-autoloader
+RUN mkdir -p database && touch database/database.sqlite
+RUN chown -R www-data:www-data /app storage bootstrap/cache
 
-FROM php:8.2-apache
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    libonig-dev \
-    libsqlite3-dev \
-    libxml2-dev \
-    zlib1g-dev \
-    libicu-dev \
-    libpng-dev \
-    libjpeg-dev \
+# Change Apache document root to public/
+RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
+RUN sed -i 's|<Directory /var/www/>|<Directory /app/public>|g' /etc/apache2/apache2.conf
+
+EXPOSE 10000
+CMD ["/usr/local/bin/docker-entrypoint.sh"]    libjpeg-dev \
     libfreetype6-dev \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
