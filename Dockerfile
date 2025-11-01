@@ -42,10 +42,10 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
-RUN echo '<Directory /app/public>
-    Options Indexes FollowSymLinks
-    AllowOverride All
-    Require all granted
+RUN echo '<Directory /app/public>\n\
+    Options Indexes FollowSymLinks\n\
+    AllowOverride All\n\
+    Require all granted\n\
 </Directory>' >> /etc/apache2/apache2.conf
 
 WORKDIR /app
