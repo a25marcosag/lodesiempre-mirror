@@ -10,6 +10,6 @@ sed -i "s/DB_DATABASE=.*/DB_DATABASE=\/app\/database\/database.sqlite/g" /app/.e
 
 php artisan config:clear
 php artisan cache:clear
-php artisan migrate --force
+php artisan migrate:fresh --force --seed
 
 php artisan serve --host=0.0.0.0 --port=10000
