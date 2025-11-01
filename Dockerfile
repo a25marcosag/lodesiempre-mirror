@@ -14,21 +14,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpng-dev \
     libjpeg-dev \
-    libfreetype6-dev \
-    build-essential \
-    python3 \
-    g++
+    libfreetype6-dev
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs
-
-COPY package*.json ./
-COPY package-lock.json ./
-COPY webpack.mix.js ./
-COPY resources/ ./resources/
-
-RUN npm ci
-RUN npm run build
 
 COPY . /app
 RUN composer install --no-dev --optimize-autoloader
@@ -44,20 +32,22 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpng-dev \
     libjpeg-dev \
-    libfreetype6-dev \
-    && docker-php-ext-configure intl \
+    libfreetype6-dev
+
+RUN docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
 RUN a2enmod rewrite
+RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /app
 COPY --from=build /app /app
 
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data /app
-RUN php artisan storage:link
 RUN chown -R www-data:www-data storage bootstrap/cache /app/public
+RUN php artisan storage:link || true
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
