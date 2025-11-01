@@ -42,12 +42,16 @@ RUN apt-get update && apt-get install -y \
 
 RUN a2enmod rewrite
 RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
+RUN echo '<Directory /app/public>
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>' >> /etc/apache2/apache2.conf
 
 WORKDIR /app
 COPY --from=build /app /app
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data /app
-RUN php artisan storage:link
 RUN chown -R www-data:www-data storage bootstrap/cache /app/public
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
