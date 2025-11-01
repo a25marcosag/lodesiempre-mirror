@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
+    nodejs npm \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
@@ -23,6 +24,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . /app
 RUN composer install --no-dev --optimize-autoloader
+RUN npm install
+RUN npm run build
 
 FROM php:8.2-apache
 
@@ -41,18 +44,15 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
 RUN a2enmod rewrite
-RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
-RUN echo '<Directory /app/public>\n\
-    Options Indexes FollowSymLinks\n\
-    AllowOverride All\n\
-    Require all granted\n\
-</Directory>' >> /etc/apache2/apache2.conf
 
 WORKDIR /app
 COPY --from=build /app /app
+
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data /app
-RUN chown -R www-data:www-data storage bootstrap/cache /app/public
+
+RUN php artisan storage:link || true
+RUN chown -R www-data:www-data storage bootstrap/cache public
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
