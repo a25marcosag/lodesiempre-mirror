@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY . /app
-RUN composer install --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 FROM php:8.2-apache
 
@@ -41,11 +41,14 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
 RUN a2enmod rewrite
+RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
 
 WORKDIR /app
 COPY --from=build /app /app
 RUN mkdir -p database && touch database/database.sqlite
 RUN chown -R www-data:www-data /app
+RUN php artisan storage:link
+RUN chown -R www-data:www-data storage bootstrap/cache /app/public
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
