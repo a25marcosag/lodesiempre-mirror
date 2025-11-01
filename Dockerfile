@@ -14,7 +14,10 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpng-dev \
     libjpeg-dev \
-    libfreetype6-dev
+    libfreetype6-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -32,9 +35,26 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libpng-dev \
     libjpeg-dev \
-    libfreetype6-dev
+    libfreetype6-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
-RUN docker-php-ext-configure intl \
+RUN a2enmod rewrite
+RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-default.conf
+
+WORKDIR /app
+COPY --from=build /app /app
+COPY --from=build /app/public /app/public
+
+RUN mkdir -p database && touch database/database.sqlite
+RUN chown -R www-data:www-data /app
+
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+EXPOSE 10000
+CMD ["/usr/local/bin/docker-entrypoint.sh"]RUN docker-php-ext-configure intl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip exif pcntl bcmath opcache intl gd
 
