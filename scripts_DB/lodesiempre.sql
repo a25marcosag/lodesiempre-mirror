@@ -89,7 +89,7 @@ INSERT INTO productos (nombre, precio, descripcion, imagen, tienda_id) VALUES
 ('Bica artesana', 5.00, 'Bizcocho tradicional gallego hecho en horno de leña.', NULL, 2),
 ('Rosca de Pascua', 4.50, 'Postre típico de Semana Santa hecho a mano.', NULL, 2);
 INSERT INTO productos (nombre, precio, descripcion, imagen, tienda_id) VALUES
-('Ramo de rosas', 15.00, NULL, 'ramoflores.jpg', 3),
+('Ramo de rosas', 15.00, NULL, NULL, 3),
 ('Maceta de suculentas', 8.50, NULL, NULL, 3),
 ('Claveles variados', 10.00, NULL, NULL, 3),
 ('Centro floral', 25.00, 'Decoración floral personalizada para eventos.', NULL, 3),

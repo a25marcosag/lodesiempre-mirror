@@ -1,0 +1,43 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url("../fonts/Open_Sans/static/OpenSans-Regular.ttf")
+        format("truetype");
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../fonts/Open_Sans/static/OpenSans-SemiBold.tff")
+        format("truetype");
+    font-style: normal;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../fonts/Open_Sans/static/OpenSans-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/static/Inter_24pt-Regular.tff") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/static/Inter_24pt-SemiBold.tff") format("truetype");
+    font-style: normal;
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter/static/Inter_24pt-Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 700;
+}

@@ -1,11 +1,183 @@
-img {
-    max-width: 150px;
-    height: auto;
+@import url("./fonts.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+body {
+    min-height: 100vh;
+    max-width: 100vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(227, 248, 255);
+    color: #222;
+    text-align: justify;
+}
+
+img,
+video,
+svg {
+    width: 100%;
     object-fit: cover;
 }
 
-svg {
-    max-width: 30px;
-    height: auto;
-    object-fit: cover;
+h1,
+h2,
+h3 {
+    color: rgb(93, 235, 168);
+    text-shadow: -2px -2px 0 #333, 2px -2px 0 #333, -2px 2px 0 #333,
+        2px 2px 0 #333;
+    text-align: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 1.25rem;
+}
+
+p {
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    color: rgb(67, 122, 97);
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: lightblue;
+}
+
+.menu {
+    display: flex;
+    gap: 1rem;
+}
+
+.main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.tarjetas {
+    padding: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4rem;
+}
+
+.tarjetas a {
+}
+
+.tarjeta {
+    padding: 1rem;
+    background-color: lightblue;
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.verif {
+    width: 2rem;
+    height: 2rem;
+}
+
+.imagen {
+    background-size: cover;
+    width: 15rem;
+    height: 10rem;
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+dialog[open] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    gap: 1rem;
+    border: 3px solid darkolivegreen;
+}
+
+dialog .btn-cerrar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 0.5rem;
+    color: darkred;
+}
+
+dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+}
+
+dialog form > * {
+    padding: 0.75rem;
+    border: 1px solid darkolivegreen;
+    border-radius: 0.5rem;
+    width: 100%;
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: lightblue;
+    font-size: 0.9rem;
 }
