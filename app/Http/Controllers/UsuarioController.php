@@ -67,8 +67,19 @@ class UsuarioController extends Controller
 
         $usuario->save();
 
-        if($desdeRegistro) {
+        if ($desdeRegistro) {
+
+            if ($usuario->tipo === 'vendedor') {
+                $tienda = new Tienda();
+                $tienda->nombre = "Tienda de ".$usuario->nombre;
+                $tienda->provincia = "A Coruña";
+                $tienda->usuario_id = $usuario->id;
+
+                $tienda->save();
+            }
+
             return $this->iniciarSesionUsuario($r);
+
         } else {
             return $this->listarUsuarios();
         }
@@ -86,6 +97,13 @@ class UsuarioController extends Controller
 
     public function deleteUsuario($id){
         $usuario = Usuario::find($id);
+
+        if ($usuario->tipo === 'vendedor') {
+            $tienda = Tienda::where('usuario_id', $usuario->id)->first();
+
+            $tienda->delete();
+        }
+
         $usuario->delete();
 
         return $this->listarUsuarios();

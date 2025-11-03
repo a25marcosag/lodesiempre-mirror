@@ -12,7 +12,9 @@
         <h1>LoDeSiempre</h1>
         <nav>
             <ul class="menu">
-                <li><a href="{{route('listar_tiendas')}}"><--</a></li>
+                @if(session('usuario_tipo') !== "vendedor")
+                    <li><a href="{{route('listar_tiendas')}}"><--</a></li>
+                @endif
                 <li>
                     @if(session('usuario_tipo') === "admin")
                         <a href="{{route('listar_usuarios')}}" aria-label="Ir a panel de usuarios">Usuarios</a>

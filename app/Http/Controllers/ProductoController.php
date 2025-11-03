@@ -12,7 +12,7 @@ class ProductoController extends Controller
         $data = [];
         $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
         $data['tienda'] = Tienda::find($idTienda);
-        return view('lista-productos',$data);
+        return view('lista-productos', $data);
     }
 
     public function addProducto(Request $r, $idTienda){

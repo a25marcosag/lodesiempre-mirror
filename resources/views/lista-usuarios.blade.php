@@ -50,7 +50,7 @@
             <form method="post" id="formDelete">
                 @csrf
                 @method('DELETE')
-                <button type="submit" onclick="return confirm('Seguro que quieres eliminar a este usuario?')">Eliminar</button>
+                <button type="submit" onclick="return confirm('Seguro que quieres eliminar a este usuario junto con su tienda?')">Eliminar</button>
             </form>
         </dialog>
     </main>
