@@ -11,7 +11,7 @@ class UsuarioController extends Controller
 {
     public function listarUsuarios(){
         $vista = 'lista-tiendas';
-        $data = ['tiendas' => Tienda::all()];
+        $data = ['tiendas' => Tienda::query()->orderBy('verif', 'desc')->orderBy('nombre', 'asc')->get()];
 
         if (session('usuario_tipo') === 'admin') {
             $vista = 'lista-usuarios';
@@ -27,7 +27,7 @@ class UsuarioController extends Controller
 
     public function iniciarSesionUsuario(Request $r){
         $vista = 'lista-tiendas';
-        $data = ['tiendas' => Tienda::all()];
+        $data = ['tiendas' => Tienda::query()->orderBy('verif', 'desc')->orderBy('nombre', 'asc')->get()];
 
         $usuario = Usuario::where('nombre', $r->get('nombre'))->where('contrasena', $r->get('password'))->where('email', $r->get('correo'))->first();
 
@@ -59,30 +59,45 @@ class UsuarioController extends Controller
     }
 
     public function addUsuario(Request $r, $desdeRegistro = false){
+        $vista = '';
+        $data = [];
+
         $usuario = new Usuario();
         $usuario->nombre = $r->get('nombre');
         $usuario->contrasena = $r->get('password');
         $usuario->tipo = $r->get('tipo');
         $usuario->email = $r->get('correo');
 
-        $usuario->save();
+        $nombreExistente = Usuario::where('nombre', $r->get('nombre'))->first();
+        $correoExistente = Usuario::where('email', $r->get('correo'))->first();
 
-        if ($desdeRegistro) {
-
-            if ($usuario->tipo === 'vendedor') {
-                $tienda = new Tienda();
-                $tienda->nombre = "Tienda de ".$usuario->nombre;
-                $tienda->provincia = "A Coruña";
-                $tienda->usuario_id = $usuario->id;
-
-                $tienda->save();
-            }
-
-            return $this->iniciarSesionUsuario($r);
+        if (isset($nombreExistente) || isset($correoExistente)) {
+            $vista = 'registro-usuario';
+            $data = ['error' => 'El usuario o el correo electrónico ya están en uso. Inténtelo de nuevo.'];
 
         } else {
-            return $this->listarUsuarios();
+            $usuario->save();
+
+            if ($desdeRegistro) {
+
+                if ($usuario->tipo === 'vendedor') {
+                    $tienda = new Tienda();
+                    $tienda->nombre = "Tienda de ".$usuario->nombre;
+                    $tienda->provincia = "A Coruña";
+                    $tienda->usuario_id = $usuario->id;
+
+                    $tienda->save();
+                }
+
+                return $this->iniciarSesionUsuario($r);
+
+            } else {
+                $vista = "lista-usuarios";
+
+            }
         }
+
+        return view($vista, $data);
     }
 
     public function updateUsuario(Request $r, $id){

@@ -59,9 +59,9 @@
                     <option value="A Coruña" {{($provincia ?? '') == 'A Coruña' ? 'selected' : ''}}>A Coruña</option>
                     <option value="Pontevedra" {{($provincia ?? '') == 'Pontevedra' ? 'selected' : ''}}>Pontevedra</option>
                 </select>
-                <input type="text" name="desc" id="desc_tienda" value="{{$tienda->descripcion}}" placeholder="Desc. de la tienda">
+                <input type="textarea" name="desc" id="desc_tienda" value="{{$tienda->descripcion}}" placeholder="Desc. de la tienda">
                 <input type="text" name="icono" id="icono_tienda" value="{{$tienda->icono}}" placeholder="Imagen de la tienda">
-                <button type="reset" class="btn-reset">Limpiar datos</button>
+                <button type="reset" class="btn-reset">Reestablecer datos</button>
                 <button type="submit" class="btn-submit">Actualizar tienda</button>
             </form>
         </dialog>
@@ -104,10 +104,13 @@
                 @csrf
                 @method('PUT')
                 <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre del producto" required>
-                <input type="number" name="precio" id="precio_edit" min="0.01" max="999.00" step="1.00" value="1.00" required>
+                <!-- Campo del precio es de tipo texto para un comportamiento homogéneo entre navegadores a través del pattern,
+                    inputmode para teclado núm. en móviles -->
+                <input type="text" name="precio" id="precio_edit" inputmode="decimal" placeholder="Precio del producto"
+                    title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
+                    pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$"required>
                 <input type="text" name="desc" id="desc_edit" placeholder="Desc. del producto">
                 <input type="text" name="imagen" id="imagen_edit" placeholder="Imagen del producto">
-                <button type="reset" class="btn-reset">Limpiar datos</button>
                 <button type="submit" class="btn-submit">Actualizar el producto</button>
             </form>
             <form method="post" id="formDeleteProd">
@@ -121,10 +124,11 @@
             <form action="{{route('add_producto', ['idTienda' => $tienda->id])}}" method="post">
                 @csrf
                 <input type="text" name="nombre" id="nombre_nuevo" placeholder="Nombre del producto" required>
-                <input type="number" name="precio" id="precio_nuevo" min="0.01" max="999.00" step="1.00" value="1.00" required>
+                <input type="text" name="precio" id="precio_edit" inputmode="decimal" placeholder="Precio del producto"
+                    title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
+                    pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$" inputmode="decimal" required>
                 <input type="text" name="desc" id="desc_nuevo" placeholder="Desc. del producto">
                 <input type="text" name="imagen" id="imagen_nuevo" placeholder="Imagen del producto">
-                <button type="reset" class="btn-reset">Limpiar datos</button>
                 <button type="submit" class="btn-submit">Añadir producto</button>
             </form>
         </dialog>

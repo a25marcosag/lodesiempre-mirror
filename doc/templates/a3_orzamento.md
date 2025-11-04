@@ -8,7 +8,7 @@ El **autor de este proyecto** será el único desarrollador: realizando el dise�
 
 Competencias técnicas: PHP en framework Laravel, HTML, CSS, JS, MySQL, manejo de BBDD y gestión de control de versiones Git con repositorio remoto en GitLab.
 
-Estimación del salario de desarrollador: **~ 12€/hora**
+Estimación del salario de desarrollador: ~ **12€/hora**
 
 Suponiendo 3h cada día: 12€\*3h = 36€/día
 

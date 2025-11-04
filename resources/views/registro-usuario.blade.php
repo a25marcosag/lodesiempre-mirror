@@ -31,6 +31,9 @@
             <input type="email" name="correo" id="correo" required><br><br>
             <button type="submit">Registrarse</button>
         </form>
+        @if(isset($error))
+            <p>{{$error}}</p>
+        @endif
     </main>
     <footer>
         <p>&copy; 2025 Marcos Asensi Goyanes</p>
