@@ -59,9 +59,9 @@
                     <option value="A Coruña" {{($provincia ?? '') == 'A Coruña' ? 'selected' : ''}}>A Coruña</option>
                     <option value="Pontevedra" {{($provincia ?? '') == 'Pontevedra' ? 'selected' : ''}}>Pontevedra</option>
                 </select>
-                <input type="textarea" name="desc" id="desc_tienda" value="{{$tienda->descripcion}}" placeholder="Desc. de la tienda">
+                <input type="text" name="desc" id="desc_tienda" value="{{$tienda->descripcion}}" placeholder="Desc. de la tienda">
                 <input type="text" name="icono" id="icono_tienda" value="{{$tienda->icono}}" placeholder="Imagen de la tienda">
-                <button type="reset" class="btn-reset">Reestablecer datos</button>
+                <button type="reset" class="btn-reset">Restablecer datos</button>
                 <button type="submit" class="btn-submit">Actualizar tienda</button>
             </form>
         </dialog>
@@ -124,7 +124,7 @@
             <form action="{{route('add_producto', ['idTienda' => $tienda->id])}}" method="post">
                 @csrf
                 <input type="text" name="nombre" id="nombre_nuevo" placeholder="Nombre del producto" required>
-                <input type="text" name="precio" id="precio_edit" inputmode="decimal" placeholder="Precio del producto"
+                <input type="text" name="precio" id="precio_nuevo" inputmode="decimal" placeholder="Precio del producto"
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
                     pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$" inputmode="decimal" required>
                 <input type="text" name="desc" id="desc_nuevo" placeholder="Desc. del producto">
