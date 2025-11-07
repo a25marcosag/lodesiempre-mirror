@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -33,7 +34,15 @@ class ProductoController extends Controller
         $producto->nombre = $r->get('nombre');
         $producto->precio = $r->get('precio');
         $producto->descripcion = $r->get('desc');
-        $producto->imagen = $r->get('imagen');
+
+        if($r->hasFile('imagen')) {
+            $imagen = $r->file('imagen');
+            $nombreImagen = $imagen->getClientOriginalName();
+
+            Storage::disk('public')->putFileAs('img', $imagen, $nombreImagen);
+
+            $producto->imagen = $nombreImagen;
+        }
 
         $producto->save();
 

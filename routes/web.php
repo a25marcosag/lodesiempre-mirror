@@ -6,7 +6,7 @@ use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',[TiendaController::class, 'listarTiendas'])->name('listar_tiendas');
-Route::put('producto/actualizar/{idTienda}',[TiendaController::class, 'updateTienda'])->name('update_tienda');
+Route::put('tienda/actualizar/{idTienda}',[TiendaController::class, 'updateTienda'])->name('update_tienda');
 
 Route::get('producto/listar/{idTienda}',[ProductoController::class, 'listarProductos'])->name('listar_productos');
 Route::post('producto/add/{idTienda}',[ProductoController::class, 'addProducto'])->name('add_producto');

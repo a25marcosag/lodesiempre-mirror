@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Producto;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TiendaController extends Controller
 {
@@ -35,7 +36,15 @@ class TiendaController extends Controller
         $tienda->nombre = $r->get('nombre');
         $tienda->provincia = $r->get('prov');
         $tienda->descripcion = $r->get('desc');
-        $tienda->icono = $r->get('icono');
+
+        if($r->hasFile('icono')) {
+            $icono = $r->file('icono');
+            $nombreIcono = $icono->getClientOriginalName();
+
+            Storage::disk('public')->putFileAs('img', $icono, $nombreIcono);
+
+            $tienda->icono = $nombreIcono;
+        }
 
         $tienda->save();
 

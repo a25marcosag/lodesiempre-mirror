@@ -57,6 +57,13 @@
     <footer>
         <p>&copy; 2025 Marcos Asensi Goyanes</p>
         <p>Aviso legal y política de privacidad</p>
+        @if(session('usuario_id'))
+            <form action="{{route('delete_usuario', ['id' => session('usuario_id')])}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('Seguro que quieres eliminar tu cuenta permanentemente?')">Borrar mi cuenta</button>
+            </form>
+        @endif
     </footer>
 </body>
 </html>

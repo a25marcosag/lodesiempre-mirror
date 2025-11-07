@@ -26,26 +26,44 @@ class UsuarioController extends Controller
     }
 
     public function iniciarSesionUsuario(Request $r){
-        $vista = 'lista-tiendas';
-        $data = ['tiendas' => Tienda::query()->orderBy('verif', 'desc')->orderBy('nombre', 'asc')->get()];
+        $data = [];
 
-        $usuario = Usuario::where('nombre', $r->get('nombre'))->where('contrasena', $r->get('password'))->first();
+        $r->validate([
+            'nombre' => 'required_without:correo',
+            'correo' => 'required_without:nombre',
+        ], [
+            'nombre.required_without' => 'Es necesario rellenar nombre y/o correo para identificarse.',
+            'correo.required_without' => 'Es necesario rellenar nombre y/o correo para identificarse.'
+        ]);
+
+        $usuarioEnBD = Usuario::where('contrasena', $r->get('password'));
+
+        if($r->filled('nombre')) {
+            $usuarioEnBD->where('nombre', $r->get('nombre'));
+        }
+
+        if($r->filled('correo')) {
+            $usuarioEnBD->where('email', $r->get('correo'));
+        }
+
+        $usuario = $usuarioEnBD->first();
 
         if ($usuario) {
             session(['usuario_id' => $usuario->id, 'usuario_nombre' => $usuario->nombre, 'usuario_tipo' => $usuario->tipo]);
 
             if (session('usuario_tipo') === 'vendedor') {
-                $vista = 'lista-productos';
                 $tienda = Tienda::where('usuario_id', session('usuario_id'))->first();
-                $data = ['productos' => Producto::where('tienda_id', $tienda->id)->orderBy('nombre', 'asc')->get(),
-                 'tienda' => $tienda];
+
+                $data['productos'] = Producto::where('tienda_id', $tienda->id)->orderBy('nombre', 'asc')->get();
+                $data['tienda'] = $tienda;
+
+                return view('lista-productos', $data);
             }
         } else {
-            $vista = 'login-usuario';
-            $data = ['error' => 'No se ha encontrado ese usuario. Inténtelo de nuevo.'];
+            return redirect()->back()->withErrors('No se ha encontrado ese usuario. Inténtelo de nuevo.');
         }
 
-        return view($vista, $data);
+        return redirect()->route('listar_tiendas');
     }
 
     public function logoutUsuario(){
@@ -119,8 +137,12 @@ class UsuarioController extends Controller
             $tienda->delete();
         }
 
-        $usuario->delete();
-
-        return $this->listarUsuarios();
+        if (session('usuario_id') === $usuario->id) {
+            $usuario->delete();
+            return $this->logoutUsuario();
+        } else {
+            $usuario->delete();
+            return $this->listarUsuarios();
+        }
     }
 }

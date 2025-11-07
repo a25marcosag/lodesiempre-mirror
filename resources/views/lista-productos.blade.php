@@ -51,7 +51,7 @@
         @endif
         <dialog id="popupTienda" class="dialog">
             <a href="#" onclick="window.popupTienda.close();" class="btn-cerrar" aria-label="Cerrar ventana de edición de tienda">X</a>
-            <form action="{{route('update_tienda', ['idTienda' => $tienda->id])}}" method="post">
+            <form action="{{route('update_tienda', ['idTienda' => $tienda->id])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="text" name="nombre" id="nombre_tienda" value="{{$tienda->nombre}}" placeholder="Nombre de la tienda" required>
@@ -60,7 +60,7 @@
                     <option value="Pontevedra" {{($provincia ?? '') == 'Pontevedra' ? 'selected' : ''}}>Pontevedra</option>
                 </select>
                 <input type="text" name="desc" id="desc_tienda" value="{{$tienda->descripcion}}" placeholder="Desc. de la tienda">
-                <input type="text" name="icono" id="icono_tienda" value="{{$tienda->icono}}" placeholder="Imagen de la tienda">
+                <input type="file" name="icono" id="icono_tienda" accept="image/*">
                 <button type="reset" class="btn-reset">Restablecer datos</button>
                 <button type="submit" class="btn-submit">Actualizar tienda</button>
             </form>
@@ -83,7 +83,6 @@
                             data-nombre="{{$p->nombre}}"
                             data-precio="{{$p->precio}}"
                             data-desc="{{$p->descripcion}}"
-                            data-imagen="{{$p->imagen}}"
                             data-tienda="{{$p->tienda_id}}">
                             Editar
                         </a>
@@ -100,7 +99,7 @@
         </ul>
         <dialog id="popupUpdate" class="dialog">
             <a href="#" onclick="window.popupUpdate.close();" class="btn-cerrar" aria-label="Cerrar ventana de edición del producto">X</a>
-            <form method="post" id="formUpdateProd">
+            <form method="post" id="formUpdateProd" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre del producto" required>
@@ -110,7 +109,7 @@
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
                     pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$"required>
                 <input type="text" name="desc" id="desc_edit" placeholder="Desc. del producto">
-                <input type="text" name="imagen" id="imagen_edit" placeholder="Imagen del producto">
+                <input type="file" name="imagen" id="imagen_edit" accept="image/*">
                 <button type="submit" class="btn-submit">Actualizar el producto</button>
             </form>
             <form method="post" id="formDeleteProd">
@@ -121,14 +120,14 @@
         </dialog>
         <dialog id="popupAdd" class="dialog">
             <a href="#" onclick="window.popupAdd.close();" class="btn-cerrar" aria-label="Cerrar ventana de añadir nuevo producto">X</a>
-            <form action="{{route('add_producto', ['idTienda' => $tienda->id])}}" method="post">
+            <form action="{{route('add_producto', ['idTienda' => $tienda->id])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="text" name="nombre" id="nombre_nuevo" placeholder="Nombre del producto" required>
                 <input type="text" name="precio" id="precio_nuevo" inputmode="decimal" placeholder="Precio del producto"
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
                     pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$" inputmode="decimal" required>
                 <input type="text" name="desc" id="desc_nuevo" placeholder="Desc. del producto">
-                <input type="text" name="imagen" id="imagen_nuevo" placeholder="Imagen del producto">
+                <input type="file" name="imagen" id="imagen_nuevo" accept="image/*">
                 <button type="submit" class="btn-submit">Añadir producto</button>
             </form>
         </dialog>
@@ -136,6 +135,13 @@
     <footer>
         <p>&copy; 2025 Marcos Asensi Goyanes</p>
         <p>Aviso legal y política de privacidad</p>
+        @if(session('usuario_id'))
+            <form action="{{route('delete_usuario', ['id' => session('usuario_id')])}}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit" onclick="return confirm('Seguro que quieres eliminar tu cuenta permanentemente?')">Borrar mi cuenta</button>
+            </form>
+        @endif
     </footer>
 </body>
 </html>
