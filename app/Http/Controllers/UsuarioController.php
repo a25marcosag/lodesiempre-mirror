@@ -29,7 +29,7 @@ class UsuarioController extends Controller
         $vista = 'lista-tiendas';
         $data = ['tiendas' => Tienda::query()->orderBy('verif', 'desc')->orderBy('nombre', 'asc')->get()];
 
-        $usuario = Usuario::where('nombre', $r->get('nombre'))->where('contrasena', $r->get('password'))->where('email', $r->get('correo'))->first();
+        $usuario = Usuario::where('nombre', $r->get('nombre'))->where('contrasena', $r->get('password'))->first();
 
         if ($usuario) {
             session(['usuario_id' => $usuario->id, 'usuario_nombre' => $usuario->nombre, 'usuario_tipo' => $usuario->tipo]);
