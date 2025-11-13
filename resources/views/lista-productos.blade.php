@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,7 @@
                     @if(session('usuario_tipo') === "admin")
                         <a href="{{route('listar_usuarios')}}" aria-label="Ir a panel de usuarios">Usuarios</a>
                     @else
-                        <a href="#" aria-label="Ir al carrito de la compra">Carrito</a>
+                        <a href="{{route('listar_productos_carrito')}}" aria-label="Ir al carrito de la compra">Carrito</a>
                     @endif
                 </li>
                 @if(session('usuario_id'))
@@ -59,17 +59,24 @@
                     <option value="A Coruña" {{($provincia ?? '') == 'A Coruña' ? 'selected' : ''}}>A Coruña</option>
                     <option value="Pontevedra" {{($provincia ?? '') == 'Pontevedra' ? 'selected' : ''}}>Pontevedra</option>
                 </select>
-                <input type="text" name="desc" id="desc_tienda" value="{{$tienda->descripcion}}" placeholder="Desc. de la tienda">
+                <textarea name="desc" id="desc_tienda" placeholder="Descripción de la tienda">{{$tienda->descripcion}}</textarea>
                 <input type="file" name="icono" id="icono_tienda" accept="image/*">
                 <button type="reset" class="btn-reset">Restablecer datos</button>
                 <button type="submit" class="btn-submit">Actualizar tienda</button>
             </form>
+            @if($tienda->icono)
+                <form action="{{route('limpiar_icono_tienda', ['idTienda' => $tienda->id])}}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit">Quitar imagen</button>
+                </form>
+            @endif
         </dialog>
         <ul class="tarjetas" title="tarjetas">
             @foreach($productos as $p)
                 <li class="tarjeta" title="tarjeta">
                     <h2>{{$p->nombre}}</h2>
-                    <p>{{$p->precio}} €</p>
+                    <p class="precio-tarjeta">{{$p->precio}} €</p>
                     <p>{{$p->descripcion}}</p>
                     @if($p->imagen)
                         @php
@@ -83,11 +90,21 @@
                             data-nombre="{{$p->nombre}}"
                             data-precio="{{$p->precio}}"
                             data-desc="{{$p->descripcion}}"
-                            data-tienda="{{$p->tienda_id}}">
+                            data-tienda="{{$p->tienda_id}}"
+                            data-imagen="{{$p->imagen}}">
                             Editar
                         </a>
+                        <form action="{{route('delete_producto', ['idTienda' => $p->tienda_id, 'idProd' => $p->id])}}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('Seguro que quieres eliminar este producto?')">Eliminar</button>
+                        </form>
                     @else
-                        <a href="#" class="btn-add-carrito" aria-label="Añadir ${{$p->nombre}} al carrito">Añadir al carrito</a>
+                        <form action="{{route('put_producto_carrito', ['idTienda' => $p->tienda_id, 'idProd' => $p->id])}}" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit" class="btn-add-carrito" aria-label="Añadir ${{$p->nombre}} al carrito">Añadir al carrito</button>
+                        </form>
                     @endif
                 </li>
             @endforeach
@@ -108,14 +125,14 @@
                 <input type="text" name="precio" id="precio_edit" inputmode="decimal" placeholder="Precio del producto"
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
                     pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$"required>
-                <input type="text" name="desc" id="desc_edit" placeholder="Desc. del producto">
+                <textarea name="desc" id="desc_edit" placeholder="Descripción del producto"></textarea>
                 <input type="file" name="imagen" id="imagen_edit" accept="image/*">
                 <button type="submit" class="btn-submit">Actualizar el producto</button>
             </form>
-            <form method="post" id="formDeleteProd">
+            <form method="post" id="formCleanImgProd">
                 @csrf
-                @method('DELETE')
-                <button type="submit" onclick="return confirm('Seguro que quieres eliminar este producto?')">Eliminar</button>
+                @method('PUT')
+                <button type="submit">Quitar imagen</button>
             </form>
         </dialog>
         <dialog id="popupAdd" class="dialog">
@@ -126,7 +143,7 @@
                 <input type="text" name="precio" id="precio_nuevo" inputmode="decimal" placeholder="Precio del producto"
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
                     pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$" inputmode="decimal" required>
-                <input type="text" name="desc" id="desc_nuevo" placeholder="Desc. del producto">
+                <textarea name="desc" id="desc_nuevo" placeholder="Descripción del producto"></textarea>
                 <input type="file" name="imagen" id="imagen_nuevo" accept="image/*">
                 <button type="submit" class="btn-submit">Añadir producto</button>
             </form>

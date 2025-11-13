@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,6 +35,11 @@
                         data-correo="{{$u->email}}">
                         Editar
                     </a>
+                    <form action="{{route('delete_usuario', ['id' => $u->id])}}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Seguro que quieres eliminar a este usuario junto con su tienda?')">Eliminar</button>
+                    </form>
                 </li>
             @endforeach
         </ul>
@@ -43,14 +48,9 @@
             <form method="post" id="formUpdate">
                 @csrf
                 @method('PUT')
-                    <input type="text" name="nombre" id="nombre_edit" value="{{$u->nombre}}" placeholder="Nombre">
-                    <input type="email" name="correo" id="correo_edit" value="{{$u->email}}" placeholder="Correo electrónico">
-                    <button type="submit">Actualizar</button>
-            </form>
-            <form method="post" id="formDelete">
-                @csrf
-                @method('DELETE')
-                <button type="submit" onclick="return confirm('Seguro que quieres eliminar a este usuario junto con su tienda?')">Eliminar</button>
+                <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre">
+                <input type="email" name="correo" id="correo_edit" placeholder="Correo electrónico">
+                <button type="submit">Actualizar</button>
             </form>
         </dialog>
     </main>

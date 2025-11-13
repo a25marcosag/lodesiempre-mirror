@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +12,12 @@
         <nav>
             <ul class="menu">
                 <li><a href="{{route('listar_tiendas')}}"><--</a></li>
+                <li><a href="{{route('inicio_sesion_usuario')}}" aria-label="Ir a inicio de sesión">Iniciar sesión</a></li>
             </ul>
         </nav>
     </header>
     <main class="main">
-        <form action="{{route('add_usuario_registro')}}" method="post">
+        <form class="form-session" action="{{route('add_usuario_registro')}}" method="post">
             @csrf
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre" required>

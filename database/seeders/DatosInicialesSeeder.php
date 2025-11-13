@@ -65,6 +65,16 @@ class DatosInicialesSeeder extends Seeder
             ['nombre' => 'Jarra pintada', 'precio' => 18.00, 'descripcion' => 'Hecha a mano con motivos celtas.', 'imagen' => null, 'tienda_id' => 5],
             ['nombre' => 'Manta artesanal', 'precio' => 28.00, 'descripcion' => 'Confeccionada en telar tradicional.', 'imagen' => null, 'tienda_id' => 5],
         ]);
+
+        DB::table('carritos')->insert([
+            ['usuario_id' => 9],
+            ['usuario_id' => 10],
+        ]);
+
+        DB::table('carrito_producto')->insert([
+            ['carrito_id' => 1],
+            ['carrito_id' => 2],
+        ]);
     }
 }
 
