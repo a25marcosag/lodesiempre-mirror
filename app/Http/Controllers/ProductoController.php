@@ -21,8 +21,16 @@ class ProductoController extends Controller
         $producto->nombre = $r->get('nombre');
         $producto->precio = $r->get('precio');
         $producto->descripcion = $r->get('desc');
-        $producto->imagen = $r->get('imagen');
         $producto->tienda_id = $idTienda;
+
+        if($r->hasFile('imagen')) {
+            $imagen = $r->file('imagen');
+            $nombreImagen = $imagen->getClientOriginalName();
+
+            Storage::disk('public')->putFileAs('img', $imagen, $nombreImagen);
+
+            $producto->imagen = $nombreImagen;
+        }
 
         $producto->save();
 
@@ -43,6 +51,15 @@ class ProductoController extends Controller
 
             $producto->imagen = $nombreImagen;
         }
+
+        $producto->save();
+
+        return $this->listarProductos($idTienda);
+    }
+
+    public function cleanImagenFromProducto($idTienda, $idProd){
+        $producto = Producto::find($idProd);
+        $producto->imagen = null;
 
         $producto->save();
 

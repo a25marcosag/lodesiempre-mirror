@@ -28,7 +28,7 @@ class TiendaController extends Controller
         $data['tiendas'] = $tiendas->get();
         $data['busqueda'] = $busqueda;
         $data['provincia'] = $provincia;
-        return view('lista-tiendas',$data);
+        return view('lista-tiendas', $data);
     }
 
     public function updateTienda(Request $r, $idTienda){
@@ -51,6 +51,18 @@ class TiendaController extends Controller
         $data = [];
         $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
         $data['tienda'] = $tienda;
-        return view('lista-productos',$data);
+        return view('lista-productos', $data);
+    }
+
+    public function cleanIconoFromTienda($idTienda){
+        $tienda = Tienda::find($idTienda);
+        $tienda->icono = null;
+
+        $tienda->save();
+
+        $data = [];
+        $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
+        $data['tienda'] = $tienda;
+        return view('lista-productos', $data);
     }
 }

@@ -91,7 +91,7 @@ class UsuarioController extends Controller
 
         if (isset($nombreExistente) || isset($correoExistente)) {
             $vista = 'registro-usuario';
-            $data = ['error' => 'El usuario o el correo electrónico ya están en uso. Inténtelo de nuevo.'];
+            $data = ['error' => 'El nombre de usuario y/o el correo electrónico ya están en uso. Inténtelo de nuevo.'];
 
         } else {
             $usuario->save();
