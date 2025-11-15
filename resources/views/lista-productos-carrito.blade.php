@@ -29,7 +29,10 @@
         </ul>
         <p>Total de la compra: <span class="precio-total">0</span> €</p>
         <a href="{{session('usuario_id') ? '#' : route('inicio_sesion_usuario')}}" class="btn-comprar" aria-label="Ir a pago de la compra"
-                onclick="return confirm('Para realizar la compra es necesario iniciar sesión.')">
+                @if( session('usuario_id') === null )
+                    onclick="return confirm('Para realizar la compra es necesario iniciar sesión.')"
+                @endif
+                >
             Comprar
         </a>
     </main>

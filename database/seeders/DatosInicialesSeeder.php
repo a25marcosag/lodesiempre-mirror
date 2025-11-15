@@ -70,11 +70,6 @@ class DatosInicialesSeeder extends Seeder
             ['usuario_id' => 9],
             ['usuario_id' => 10],
         ]);
-
-        DB::table('carrito_producto')->insert([
-            ['carrito_id' => 1],
-            ['carrito_id' => 2],
-        ]);
     }
 }
 

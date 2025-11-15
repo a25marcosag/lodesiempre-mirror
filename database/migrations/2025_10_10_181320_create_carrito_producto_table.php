@@ -10,27 +10,20 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::create('carrito_producto', function (Blueprint $table) {
-        $table->id();
-        $table->integer('cantidad')->default(1);
+    {
+        Schema::create('carrito_producto', function (Blueprint $table) {
+            $table->id();
+            $table->integer('cantidad')->default(1);
 
-        $table->unsignedBigInteger('producto_id')->nullable();
-        $table->unsignedBigInteger('carrito_id');
+            $table->unsignedBigInteger('producto_id')->nullable();
+            $table->unsignedBigInteger('carrito_id');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->foreign('carrito_id')->references('id')->on('carritos')->onDelete('cascade');
 
-        $table->foreign('producto_id')
-              ->references('id')
-              ->on('productos')
-              ->nullOnDelete();
+            $table->timestamps();
+        });
+    }
 
-        $table->foreign('carrito_id')
-              ->references('id')
-              ->on('carritos')
-              ->cascadeOnDelete();
-
-        $table->timestamps();
-    });
-}
     /**
      * Reverse the migrations.
      */

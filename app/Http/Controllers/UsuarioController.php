@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrito;
 use App\Models\Tienda;
 use App\Models\Producto;
 use App\Models\Usuario;
@@ -107,6 +108,13 @@ class UsuarioController extends Controller
                     $tienda->save();
                 }
 
+                if ($usuario->tipo === 'consumidor') {
+                    $carrito = new Carrito();
+                    $carrito->usuario_id = $usuario->id;
+
+                    $carrito->save();
+                }
+
                 return $this->iniciarSesionUsuario($r);
 
             } else {
@@ -135,6 +143,12 @@ class UsuarioController extends Controller
             $tienda = Tienda::where('usuario_id', $usuario->id)->first();
 
             $tienda->delete();
+        }
+
+        if ($usuario->tipo === 'consumidor') {
+            $carrito = Carrito::where('usuario_id', $usuario->id)->first();
+
+            $carrito->delete();
         }
 
         if (session('usuario_id') === $usuario->id) {
