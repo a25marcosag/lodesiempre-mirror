@@ -7,7 +7,7 @@
 }
 
 :root {
-    font-size: 20px;
+    font-size: 14px;
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
     font-weight: 400;
@@ -82,6 +82,7 @@ header {
     top: 0;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     gap: 1rem;
@@ -91,6 +92,7 @@ header {
 
 .menu {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
 }
 
@@ -99,9 +101,11 @@ header {
     width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 1rem;
+    padding: 1rem;
 }
 
 .tarjetas {
@@ -122,12 +126,20 @@ header {
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
+.tarjeta-titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .verif {
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .imagen {
@@ -173,22 +185,41 @@ dialog form > * {
     padding: 0.75rem;
     border: 1px solid darkolivegreen;
     border-radius: 0.5rem;
-    width: 100%;
-}
-
-dialog button {
-    font-size: 0.7rem;
+    width: auto;
 }
 
 footer {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
     padding: 1rem;
     background-color: lightblue;
     font-size: 0.9rem;
+}
+
+@media screen and (min-width: 700px) {
+    :root {
+        font-size: 20px;
+    }
+
+    header,
+    footer {
+        flex-direction: row;
+    }
+}
+
+/* -- Estilos de Home -- */
+.form-busq button {
+    width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+    .form-busq button {
+        width: fit-content;
+    }
 }
 
 /* -- Estilos del carrito -- */

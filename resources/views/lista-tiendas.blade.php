@@ -9,7 +9,7 @@
 <body>
     <header>
         <h1>LoDeSiempre</h1>
-        <form action="{{route('listar_tiendas')}}" method="get">
+        <form action="{{route('listar_tiendas')}}" method="get" class="form-busq">
             @csrf
             <input type="text" name="busqueda" id="busqueda" value="{{$busqueda ?? ''}}" placeholder="Buscar tienda...">
             <select name="provincia" id="provincia">
@@ -41,18 +41,21 @@
         <ul class="tarjetas" title="tarjetas">
             @foreach($tiendas as $t)
                 <a href="{{route('listar_productos', $t->id)}}" aria-label="Ir a la tienda {{$t->nombre}}"><li class="tarjeta" title="tarjeta">
-                    @if($t->verif)
-                    <span class="verif">
-                        <svg fill="#3d3846" viewBox="0 0 24.00 24.00" id="check-circle" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color" stroke="#3d3846" stroke-width="0.528"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"></g><g id="SVGRepo_iconCarrier"><circle id="primary" cx="12" cy="12" r="10" style="fill: #8ff0a4;"></circle><path id="secondary" d="M11,16a1,1,0,0,1-.71-.29l-3-3a1,1,0,1,1,1.42-1.42L11,13.59l4.29-4.3a1,1,0,0,1,1.42,1.42l-5,5A1,1,0,0,1,11,16Z" style="fill: #26a269;"></path></g></svg>
-                    </span>
-                    @endif
+
                     @if($t->icono)
                         @php
                             $nombreImagen = asset('storage/img/' . $t->icono);
                         @endphp
                         <span class="imagen" style="background-image: url({{$nombreImagen}});"></span>
                     @endif
-                    <h2>{{$t->nombre}}</h2>
+                    <section class="tarjeta-titulo">
+                        <h2>{{$t->nombre}}</h2>
+                        @if($t->verif)
+                            <span class="verif">
+                                <svg fill="#3d3846" viewBox="0 0 24.00 24.00" id="check-circle" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color" stroke="#3d3846" stroke-width="0.528"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.192"></g><g id="SVGRepo_iconCarrier"><circle id="primary" cx="12" cy="12" r="10" style="fill: #8ff0a4;"></circle><path id="secondary" d="M11,16a1,1,0,0,1-.71-.29l-3-3a1,1,0,1,1,1.42-1.42L11,13.59l4.29-4.3a1,1,0,0,1,1.42,1.42l-5,5A1,1,0,0,1,11,16Z" style="fill: #26a269;"></path></g></svg>
+                            </span>
+                        @endif
+                    </section>
                 </li></a>
             @endforeach
         </ul>

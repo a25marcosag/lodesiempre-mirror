@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('cantidad')->default(1);
 
-            $table->unsignedBigInteger('producto_id')->nullable();
+            $table->unsignedBigInteger('producto_id');
             $table->unsignedBigInteger('carrito_id');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->foreign('carrito_id')->references('id')->on('carritos')->onDelete('cascade');
