@@ -82,6 +82,19 @@ class CarritoController extends Controller
         return response()->json(['ok' => true]);
     }
 
+    public function borrarJsonAllProductosCarrito() {
+        if (session('usuario_id')) {
+            $carrito = Carrito::where('usuario_id', session('usuario_id'))->first();
+            DB::table('carrito_producto')->where('carrito_id', $carrito->id)->delete();
+
+        } else {
+            session(['carrito' => []]);
+
+        }
+
+        return response()->json(['ok' => true]);
+    }
+
     public function putProductoInCarrito($idTienda, $idProd){
         $producto = Producto::find($idProd);
 

@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" {{asset('favicon.ico')}}>
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
+    <style>
+        :root {
+            --gradiente-fondo: linear-gradient(
+                to bottom left,
+                rgb(168, 223, 241) 0%,
+                rgb(168, 223, 241) 30%,
+                rgb(227, 248, 255) 50%,
+                rgb(168, 223, 241) 70%,
+                rgb(168, 223, 241) 100%
+            );
+        }
+    </style>
     <title>LoDeSiempre</title>
 </head>
 <body>
     <header>
         <h1>LoDeSiempre</h1>
+        <a class="logo" href="{{route('listar_tiendas')}}"><img src="{{asset('storage/img/logo.png')}}" alt="LoDeSiempre"></a>
         <nav>
             <ul class="menu">
-                <li><a href="{{route('listar_tiendas')}}"><--</a></li>
                 <li><a href="{{route('inicio_sesion_usuario')}}" aria-label="Ir a inicio de sesión">Iniciar sesión</a></li>
             </ul>
         </nav>

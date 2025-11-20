@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{asset('favicon.ico')}}">
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <title>LoDeSiempre</title>
 </head>
 <body>
     <header>
         <h1>LoDeSiempre</h1>
+        <a class="logo" href="{{route('listar_tiendas')}}"><img src="{{asset('storage/img/logo.png')}}" alt="LoDeSiempre"></a>
         <form action="{{route('listar_tiendas')}}" method="get" class="form-busq">
             @csrf
             <input type="text" name="busqueda" id="busqueda" value="{{$busqueda ?? ''}}" placeholder="Buscar tienda...">
@@ -17,14 +19,16 @@
                 <option value="A Coruña" {{($provincia ?? '') == 'A Coruña' ? 'selected' : ''}}>A Coruña</option>
                 <option value="Pontevedra" {{($provincia ?? '') == 'Pontevedra' ? 'selected' : ''}}>Pontevedra</option>
             </select>
-            <button type="submit">Buscar</button>
+            <button type="submit">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="rgb(67, 122, 97)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            </button>
         </form>
         <nav>
             <ul class="menu">
                 <li>
                     @if(session('usuario_tipo') === "admin")
                         <a href="{{route('listar_usuarios')}}" aria-label="Ir a panel de usuarios">Usuarios</a>
-                    @else
+                    @elseif(session('usuario_tipo') !== "vendedor")
                         <a href="{{route('listar_productos_carrito')}}" aria-label="Ir al carrito de la compra">Carrito</a>
                     @endif
                 </li>

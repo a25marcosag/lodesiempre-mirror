@@ -3,22 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" {{asset('favicon.ico')}}>
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
+    <style>
+        :root {
+            --gradiente-fondo: linear-gradient(
+                to bottom left,
+                rgb(227, 248, 255) 0%,
+                rgb(227, 248, 255) 30%,
+                rgb(168, 212, 241) 50%,
+                rgb(227, 248, 255) 70%,
+                rgb(227, 248, 255) 100%
+            );
+        }
+    </style>
     <script src="{{asset('js/updateProdModal.js')}}" defer></script>
     <title>LoDeSiempre</title>
 </head>
 <body>
     <header>
         <h1>LoDeSiempre</h1>
+        <a class="logo"
+        @if(session('usuario_tipo') !== "vendedor")
+            href="{{route('listar_tiendas')}}"
+        @endif
+        >
+            <img src="{{asset('storage/img/logo.png')}}" alt="LoDeSiempre">
+        </a>
         <nav>
             <ul class="menu">
-                @if(session('usuario_tipo') !== "vendedor")
-                    <li><a href="{{route('listar_tiendas')}}"><--</a></li>
-                @endif
                 <li>
                     @if(session('usuario_tipo') === "admin")
                         <a href="{{route('listar_usuarios')}}" aria-label="Ir a panel de usuarios">Usuarios</a>
-                    @else
+                    @elseif(session('usuario_tipo') !== "vendedor")
                         <a href="{{route('listar_productos_carrito')}}" aria-label="Ir al carrito de la compra">Carrito</a>
                     @endif
                 </li>

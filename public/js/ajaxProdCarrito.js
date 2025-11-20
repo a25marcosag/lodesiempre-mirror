@@ -42,7 +42,15 @@ function renderProductos(productos) {
         return (
             anterior +
             `<li class="tarjeta" title="tarjeta" data-id="${actual.id}">
-                <h2>${i + 1}. ${actual.nombre} x${actual.cantidad}</h2>
+                <p>
+                    <section class="btn-borrar" aria-label="Borrar ${
+                        actual.nombre
+                    } del carrito" data-id="${actual.id}">
+                        <svg class="bin-closed" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="104.923" y="191.732" style="fill:#f08080;" width="302.163" height="304.524"></rect> <g> <path style="fill:#556b2f;" d="M180.066,413.377c-8.69,0-15.738-7.047-15.738-15.738V296.918c0-8.69,7.047-15.738,15.738-15.738 s15.738,7.047,15.738,15.738v100.721C195.803,406.329,188.756,413.377,180.066,413.377z"></path> <path style="fill:#556b2f;" d="M256,413.377c-8.69,0-15.738-7.047-15.738-15.738V296.918c0-8.69,7.047-15.738,15.738-15.738 c8.69,0,15.738,7.047,15.738,15.738v100.721C271.738,406.329,264.69,413.377,256,413.377z"></path> <path style="fill:#556b2f;" d="M331.934,413.377c-8.69,0-15.738-7.047-15.738-15.738V296.918c0-8.69,7.047-15.738,15.738-15.738 s15.738,7.047,15.738,15.738v100.721C347.672,406.329,340.625,413.377,331.934,413.377z"></path> <path style="fill:#556b2f;" d="M395.935,73.706c-8.69,0-15.738,7.047-15.738,15.738s7.047,15.738,15.738,15.738 c18.295,0,33.18,14.885,33.18,33.18v37.64H407.08H104.92H82.886v-37.64c0-18.295,14.885-33.18,33.18-33.18h163.541 c8.69,0,15.738-7.047,15.738-15.738s-7.047-15.738-15.738-15.738h-92.852v-42.23h138.492v57.968c0,8.69,7.047,15.738,15.738,15.738 s15.738-7.047,15.738-15.738V15.738c0-8.69-7.047-15.738-15.738-15.738H171.017c-8.69,0-15.738,7.047-15.738,15.738v57.968h-39.214 c-35.651,0-64.655,29.005-64.655,64.655v53.377c0,8.69,7.047,15.738,15.738,15.738h22.034v288.786 c0,8.69,7.047,15.738,15.738,15.738h302.16c8.69,0,15.738-7.047,15.738-15.738V207.476h22.034c8.69,0,15.738-7.047,15.738-15.738 v-53.377C460.59,102.71,431.585,73.706,395.935,73.706z M391.342,480.525H120.658V207.476h270.685V480.525z"></path> </g> </g></svg>
+                        <svg class="bin-open" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect x="114.402" y="220.724" style="fill:rgb(67, 122, 97);" width="274.813" height="276.96"></rect> <g> <path style="fill:#556b2f;" d="M182.746,422.305c-7.905,0-14.313-6.409-14.313-14.313v-91.604c0-7.904,6.408-14.313,14.313-14.313 c7.905,0,14.313,6.409,14.313,14.313v91.604C197.06,415.895,190.652,422.305,182.746,422.305z"></path> <path style="fill:#556b2f;" d="M251.808,422.305c-7.905,0-14.313-6.409-14.313-14.313v-91.604c0-7.904,6.408-14.313,14.313-14.313 c7.905,0,14.313,6.409,14.313,14.313v91.604C266.121,415.895,259.713,422.305,251.808,422.305z"></path> <path style="fill:#556b2f;" d="M320.869,422.305c-7.905,0-14.313-6.409-14.313-14.313v-91.604c0-7.904,6.408-14.313,14.313-14.313 c7.905,0,14.313,6.409,14.313,14.313v91.604C335.182,415.895,328.774,422.305,320.869,422.305z"></path> <path style="fill:#556b2f;" d="M434.571,135.961c-8.435-13.251-21.524-22.423-36.856-25.828 c-7.712-1.722-15.362,3.152-17.076,10.869c-1.713,7.718,3.153,15.361,10.869,17.076c7.869,1.749,14.585,6.455,18.913,13.255 c4.328,6.8,5.75,14.879,4.002,22.748l-7.423,33.418L99.603,139.224l7.423-33.42c3.608-16.243,19.754-26.519,36.002-22.917 l145.2,32.249c7.713,1.713,15.361-3.153,17.076-10.869c1.713-7.718-3.153-15.361-10.869-17.076l-82.44-18.309l8.327-37.493 l122.96,27.308l-11.431,51.467c-1.713,7.718,3.153,15.361,10.869,17.076c1.045,0.232,2.088,0.344,3.116,0.344 c6.563,0,12.478-4.542,13.96-11.213l14.534-65.44c0.823-3.706,0.14-7.587-1.898-10.789c-2.038-3.202-5.266-5.463-8.972-6.286 L212.555,0.342c-7.713-1.709-15.362,3.152-17.076,10.869l-11.43,51.466l-34.815-7.732C117.579,47.909,86.11,67.948,79.079,99.6 l-10.526,47.391c-1.713,7.718,3.153,15.361,10.869,17.076l190.666,42.347H114.402c-7.905,0-14.313,6.409-14.313,14.313v276.96 c0,7.904,6.408,14.313,14.313,14.313h274.81c7.905,0,14.313-6.409,14.313-14.313V236.049l11.243,2.498 c1.026,0.229,2.067,0.341,3.103,0.341c2.701,0,5.37-0.764,7.686-2.239c3.202-2.038,5.463-5.266,6.288-8.972l10.526-47.391 C445.776,164.954,443.006,149.212,434.571,135.961z M374.9,483.374H128.716V235.04H374.9V483.374z"></path> </g> </g></svg>
+                    </section>
+                    <h2>${i + 1}. ${actual.nombre} x${actual.cantidad}</h2>
+                </p>
                 <p>${(actual.precio * actual.cantidad).toFixed(2)} € (${
                 actual.precio
             } €/Ud.)</p>
@@ -64,7 +72,7 @@ function renderProductos(productos) {
 
 function actualizarProducto(producto, cantidad) {
     ajax({
-        url: `${urlProductos}/${producto.id}`,
+        url: `${urlProductos}/actualizar/${producto.id}`,
         method: "PATCH",
         fSuccess: (json) => {
             producto.cantidad = json.cantidad;
@@ -81,7 +89,7 @@ function actualizarProducto(producto, cantidad) {
 
 function borrarProducto(id) {
     ajax({
-        url: `${urlProductos}/${id}`,
+        url: `${urlProductos}/eliminar/${id}`,
         method: "DELETE",
         fSuccess: (json) => {
             let i = productos.findIndex((el) => el.id == id);
@@ -92,17 +100,36 @@ function borrarProducto(id) {
     });
 }
 
+function borrarProductos() {
+    ajax({
+        url: `${urlProductos}/eliminar`,
+        method: "DELETE",
+        fSuccess: (json) => {
+            productos.splice(0, productos.length);
+            renderProductos(productos);
+        },
+        fError: (error) => console.log(error),
+    });
+}
+
 $listaProd.addEventListener("click", (ev) => {
     ev.preventDefault();
-    let id = ev.target.dataset.id;
 
-    if (id) {
-        const producto = productos.find((el) => el.id == id);
+    let btnBorrar = ev.target.closest(".btn-borrar");
+    if (btnBorrar) {
+        let idBtnBorrar = btnBorrar.dataset.id;
+        borrarProducto(idBtnBorrar);
+    } else {
+        let idSumaResta = ev.target.dataset.id;
 
-        if (ev.target.classList.contains("btn-sumar")) {
-            actualizarProducto(producto, 1);
-        } else if (ev.target.classList.contains("btn-restar")) {
-            actualizarProducto(producto, -1);
+        if (idSumaResta) {
+            const producto = productos.find((el) => el.id == idSumaResta);
+
+            if (ev.target.classList.contains("btn-sumar")) {
+                actualizarProducto(producto, 1);
+            } else if (ev.target.classList.contains("btn-restar")) {
+                actualizarProducto(producto, -1);
+            }
         }
     }
 });

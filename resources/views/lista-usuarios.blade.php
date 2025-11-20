@@ -3,16 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" {{asset('favicon.ico')}}>
     <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <script src="{{asset('js/updateUsuarioModal.js')}}" defer></script>
+    <style>
+        :root {
+            --gradiente-fondo: linear-gradient(
+                to bottom left,
+                rgb(227, 248, 255) 0%,
+                rgb(227, 248, 255) 30%,
+                rgb(168, 202, 241) 50%,
+                rgb(227, 248, 255) 70%,
+                rgb(227, 248, 255) 100%
+            );
+        }
+    </style>
     <title>LoDeSiempre</title>
 </head>
 <body>
     <header>
         <h1>LoDeSiempre</h1>
+        <a class="logo" href="{{route('listar_tiendas')}}"><img src="{{asset('storage/img/logo.png')}}" alt="LoDeSiempre"></a>
         <nav>
             <ul class="menu">
-                <li><a href="{{route('listar_tiendas')}}"><--</a></li>
                 @if(session('usuario_id'))
                     <li><a href="{{route('logout_usuario')}}" aria-label="Cerrar tu sesión actual">Cerrar sesión</a></li>
                 @else
