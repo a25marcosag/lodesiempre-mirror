@@ -90,6 +90,24 @@ ul {
     list-style: none;
 }
 
+select {
+    background: rgb(227, 248, 255);
+}
+
+input,
+select {
+    border-radius: 0.5rem;
+    font: inherit;
+    color: inherit;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    background: rgb(227, 248, 255);
+    outline-color: darkolivegreen;
+}
+
 header {
     position: sticky;
     top: 0;
@@ -104,7 +122,7 @@ header {
 }
 
 .logo {
-    max-width: 100px;
+    max-width: 150px;
 }
 
 .menu {
@@ -147,6 +165,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.5rem;
 }
 
 .tarjeta-titulo {
@@ -168,6 +187,16 @@ svg {
     height: 10rem;
 }
 
+.btn-modal,
+.btn-add-carrito,
+.btn-vaciar,
+.btn-comprar {
+    background: rgb(227, 248, 255);
+    border: 1px solid darkolivegreen;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+}
+
 dialog::backdrop {
     background: rgba(0, 0, 0, 0.8);
 }
@@ -184,6 +213,8 @@ dialog[open] {
     padding: 2rem;
     gap: 1rem;
     border: 3px solid darkolivegreen;
+    line-height: 1.6;
+    font-weight: 400;
 }
 
 dialog .btn-cerrar {
@@ -192,6 +223,7 @@ dialog .btn-cerrar {
     right: 0;
     padding: 0 0.5rem;
     color: darkred;
+    font-weight: 700;
 }
 
 dialog form {
@@ -202,10 +234,15 @@ dialog form {
 }
 
 dialog form > * {
-    padding: 0.75rem;
+    padding: 0.5rem;
     border: 1px solid darkolivegreen;
     border-radius: 0.5rem;
     width: auto;
+}
+
+dialog form button:hover {
+    background: rgb(227, 248, 255);
+    outline-color: darkolivegreen;
 }
 
 footer {
@@ -310,7 +347,16 @@ footer {
 }
 
 .form-session > * {
-    padding: 0.75rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
     width: 100%;
+}
+
+.form-session > *:not(label) {
+    border: 1px solid darkolivegreen;
+}
+
+.form-session button:hover {
+    background: rgb(227, 248, 255);
+    outline-color: darkolivegreen;
 }

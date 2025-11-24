@@ -10,9 +10,11 @@ const $d = document,
 
 $d.addEventListener("DOMContentLoaded", () => {
     // vvv Este snippet no pertenece a la lógica de la ventana update producto: es de la vista principal vvv
-    let precioFueraModal = $d.querySelectorAll(".precio-tarjeta");
-    let precioFloat = parseFloat(precioFueraModal.textContent);
-    precioFueraModal.textContent = precioFloat.toFixed(2);
+    let preciosFueraModal = $d.querySelectorAll(".precio-tarjeta");
+    preciosFueraModal.forEach((el) => {
+        let precio = parseFloat(el.textContent);
+        el.textContent = precio.toFixed(2) + " €";
+    });
     // ^^^ Fin del snippet ^^^
 
     $btnsUpdateProd.forEach((btn) => {

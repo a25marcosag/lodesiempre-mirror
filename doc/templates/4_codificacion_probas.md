@@ -38,7 +38,15 @@ Todo el comportamiento principal de la página está ahora completo, exceptuando
 
 ### Fecha
 
+24-11-2025
+
 ### Descripción
+
+Añadido un carrito AJAX que afecta a la BBDD si es de un usuario cliente o se guarda en una variable temporal de sesión si es de un usuario anónimo. Se pueden añadir productos y, ya en el carrito, sumar/restar unidades de cada uno, borrarlos uno a uno o vaciar el carrito de golpe. Al intentar comprar como anónimo lleva a la vista de inicio de sesión.
+
+Ahora se pueden subir y borrar imágenes para las tiendas/productos. Añadido botón en el footer para borrar la cuenta del usuario logueado (junto con su tienda/carrito correspondiente).
+
+Diversas mejoras en la lógica del código, así como visuales. Ahora la página tiene diseño responsive.
 
 # Retos e Innovación
 
@@ -81,3 +89,13 @@ Contar con una url pública con la que se pueda acceder al proyecto desde un nav
 ### Descripción
 
 Investigación sobre como sería posible el hosting de este proyecto de manera gratuita, manteniendo las migraciones y los mismos servicios que en local (php, sist. de gestión de BBDD y serv. Apache). Tras probar GitLab CI/CD y Railway, me decanté por Render utilizando un repositorio de GitHub público con Dockerfile.
+
+## Reto número 5
+
+### Motivación
+
+Incorporar AJAX con JSON a la web, específicamente al carrito para que toda su edición sea asíncrona.
+
+### Descripción
+
+Incorporación por primera vez de operaciones AJAX a un backend real, concretamente con sintaxis PHP de Laravel.
