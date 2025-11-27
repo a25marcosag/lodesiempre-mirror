@@ -336,6 +336,10 @@ footer {
     color: lightcoral;
 }
 
+.sin-prod {
+    font-weight: 600;
+}
+
 /* -- Estilos del login y el registro -- */
 .form-session {
     display: flex;

@@ -37,7 +37,7 @@
             <label for="correo">Email</label>
             <input type="email" name="correo" id="correo">
             <label for="password">Contraseña</label>
-            <input type="text" name="password" id="password" required>
+            <input type="password" name="password" id="password" required>
             <button type="submit">Iniciar sesión</button>
         </form>
         @if($errors->any())

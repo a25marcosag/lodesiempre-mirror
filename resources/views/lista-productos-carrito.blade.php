@@ -40,7 +40,7 @@
         <h2>Carrito{{session('usuario_nombre') ? ' de '.session('usuario_nombre') : ''}}</h2>
         <ul class="tarjetas" title="tarjetas">
         </ul>
-        <p>Total de la compra: <span class="precio-total">0</span> €</p>
+        <p class="total-compra">Total de la compra: <span class="precio-total">0</span> €</p>
         <button onclick="borrarProductos()" class="btn-vaciar" aria-label="Borrar el carrito entero">
             Vaciar carrito
         </button>

@@ -34,6 +34,17 @@ function getData() {
 
 function renderProductos(productos) {
     let total = 0;
+
+    if (productos.length === 0) {
+        $d.querySelector(".total-compra").innerHTML = "";
+        $d.querySelector(".btn-vaciar").remove();
+        $d.querySelector(".btn-comprar").remove();
+        $listaProd.innerHTML =
+            "<p class='sin-prod'>¡Vaya! Tu carrito está vacío.</p>";
+
+        return;
+    }
+
     $listaProd.innerHTML = productos.reduce((anterior, actual, i) => {
         total += actual.cantidad * actual.precio;
         let urlImagenProd = actual.imagen

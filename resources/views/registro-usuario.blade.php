@@ -35,7 +35,7 @@
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre" required>
             <label for="password">Contraseña</label>
-            <input type="text" name="password" id="password" required>
+            <input type="password" name="password" id="password" required>
             <label for="tipos">Elegir tipo de cuenta</label>
             <select name="tipo" id="tipo">
                 <option value="consumidor">Cliente</option>
