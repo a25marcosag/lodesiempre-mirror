@@ -23,9 +23,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY . /app
 
-RUN composer require resend/resend-laravel
-
-RUN composer update --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 FROM php:8.2-apache
 
