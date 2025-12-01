@@ -22,6 +22,7 @@ Route::get('carrito/listar/json',[CarritoController::class, 'mostrarJsonProducto
 Route::patch('carrito/listar/json/actualizar/{idProd}',[CarritoController::class, 'actualizarJsonProductoCarrito']);
 Route::delete('carrito/listar/json/eliminar/{idProd}',[CarritoController::class, 'borrarJsonProductoCarrito']);
 Route::delete('carrito/listar/json/eliminar',[CarritoController::class, 'borrarJsonAllProductosCarrito']);
+Route::get('carrito/comprado',[CarritoController::class, 'procesarCompra'])->name('procesar_compra');
 
 Route::get('usuario/listar',[UsuarioController::class, 'listarUsuarios'])->name('listar_usuarios');
 Route::get('usuario/registro',[UsuarioController::class, 'registroUsuario'])->name('registro_usuario');

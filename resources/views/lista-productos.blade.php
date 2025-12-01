@@ -79,15 +79,26 @@
                     <option value="Pontevedra" {{($provincia ?? '') == 'Pontevedra' ? 'selected' : ''}}>Pontevedra</option>
                 </select>
                 <textarea name="desc" id="desc_tienda" placeholder="Descripción de la tienda">{{$tienda->descripcion}}</textarea>
-                <input type="file" name="icono" id="icono_tienda" accept="image/*">
+                <p class="edicion-img">
+                    <label class="file-label">
+                        Añadir imagen
+                        <input type="file" name="icono" id="icono_tienda" accept="image/*">
+                    </label>
+                    @php
+                        $nombreImagenTienda = asset('storage/img/' . $tienda->icono);
+                    @endphp
+                    <span class="imagen" style="background-image: url({{$nombreImagenTienda}});"></span>
+                    @if($tienda->icono)
+                        <button type="submit" form="formCleanImgTienda">Quitar imagen</button>
+                    @endif
+                </p>
                 <button type="reset" class="btn-reset">Restablecer datos</button>
                 <button type="submit" class="btn-submit">Actualizar tienda</button>
             </form>
             @if($tienda->icono)
-                <form action="{{route('limpiar_icono_tienda', ['idTienda' => $tienda->id])}}" method="post">
+                <form action="{{route('limpiar_icono_tienda', ['idTienda' => $tienda->id])}}" method="post" id="formCleanImgTienda">
                     @csrf
                     @method('PUT')
-                    <button type="submit">Quitar imagen</button>
                 </form>
             @endif
         </dialog>
@@ -150,15 +161,21 @@
                     inputmode para teclado núm. en móviles -->
                 <input type="text" name="precio" id="precio_edit" inputmode="decimal" placeholder="Precio del producto"
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
-                    pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$"required>
+                    pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$" required>
                 <textarea name="desc" id="desc_edit" placeholder="Descripción del producto"></textarea>
-                <input type="file" name="imagen" id="imagen_edit" accept="image/*">
+                <p class="edicion-img">
+                    <label class="file-label">
+                        Añadir imagen
+                        <input type="file" name="imagen" id="imagen_edit" accept="image/*">
+                    </label>
+                    <span class="imagen"></span>
+                    <button type="submit" form="formCleanImgProd" class="btn-quitar-img-prod">Quitar imagen</button>
+                </p>
                 <button type="submit" class="btn-submit">Actualizar el producto</button>
             </form>
             <form method="post" id="formCleanImgProd">
                 @csrf
                 @method('PUT')
-                <button type="submit">Quitar imagen</button>
             </form>
         </dialog>
         <dialog id="popupAdd" class="dialog">
@@ -170,7 +187,13 @@
                     title="Tiene que ser un número del 0.01 al 999.99, los decimales se escriben con punto y son opcionales"
                     pattern="^(0\.0*[1-9]|[1-9][0-9]{0,2}(\.[0-9]{1,2})?)$" inputmode="decimal" required>
                 <textarea name="desc" id="desc_nuevo" placeholder="Descripción del producto"></textarea>
-                <input type="file" name="imagen" id="imagen_nuevo" accept="image/*">
+                <p class="edicion-img">
+                    <label class="file-label">
+                        Añadir imagen
+                        <input type="file" name="imagen" id="imagen_nuevo" accept="image/*">
+                    </label>
+                    <span class="imagen"></span>
+                </p>
                 <button type="submit" class="btn-submit">Añadir producto</button>
             </form>
         </dialog>

@@ -34,17 +34,22 @@
             @csrf
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre" required>
-            <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password" required>
+            <label for="contrasena">Contraseña</label>
+            <input type="password" name="contrasena" id="contrasena" required>
+            <label for="contrasena_confirmation">Confirmación de contraseña</label>
+            <input type="password" name="contrasena_confirmation" id="contrasena_confirmation" required>
             <label for="tipos">Elegir tipo de cuenta</label>
             <select name="tipo" id="tipo">
                 <option value="consumidor">Cliente</option>
                 <option value="vendedor">Tienda</option>
             </select>
             <label for="correo">Email</label>
-            <input type="email" name="correo" id="correo" required><br><br>
+            <input type="email" name="correo" id="correo" required>
             <button type="submit">Registrarse</button>
         </form>
+        @if($errors->any())
+            <p>{{$errors->first()}}</p>
+        @endif
         @if(isset($error))
             <p>{{$error}}</p>
         @endif

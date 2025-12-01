@@ -38,19 +38,25 @@
     </header>
     <main class="main">
         <h2>Carrito{{session('usuario_nombre') ? ' de '.session('usuario_nombre') : ''}}</h2>
-        <ul class="tarjetas" title="tarjetas">
-        </ul>
-        <p class="total-compra">Total de la compra: <span class="precio-total">0</span> €</p>
-        <button onclick="borrarProductos()" class="btn-vaciar" aria-label="Borrar el carrito entero">
-            Vaciar carrito
-        </button>
-        <a href="{{session('usuario_id') ? '#' : route('inicio_sesion_usuario')}}" class="btn-comprar" aria-label="Ir a pago de la compra"
-                @if( session('usuario_id') === null )
-                    onclick="return confirm('Para realizar la compra es necesario iniciar sesión.')"
-                @endif
-                >
-            Comprar
-        </a>
+        @if(session('success'))
+            <p class="sin-prod">{{session('success')}}</p>
+        @else
+            <ul class="tarjetas" title="tarjetas">
+            </ul>
+            <p class="total-compra">Total de la compra: <span class="precio-total">0</span> €</p>
+            <button onclick="borrarProductos()" class="btn-vaciar" aria-label="Borrar el carrito entero">
+                Vaciar carrito
+            </button>
+            <a href="{{session('usuario_id') ? route('procesar_compra') : route('inicio_sesion_usuario')}}" class="btn-comprar" aria-label="Ir a pago de la compra"
+                    @if( session('usuario_id') === null )
+                        onclick="return confirm('Para realizar la compra es necesario iniciar sesión.')"
+                    @else
+                        onclick="return confirm('¿Confirmar compra?')"
+                    @endif
+                    >
+                Comprar
+            </a>
+        @endif
     </main>
     <footer>
         <p>&copy; 2025 Marcos Asensi Goyanes</p>

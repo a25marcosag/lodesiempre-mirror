@@ -65,9 +65,6 @@ h2 {
     font-size: 1.25rem;
 }
 
-p {
-}
-
 a {
     text-decoration: none;
     color: inherit;
@@ -82,7 +79,8 @@ button {
 }
 
 a:hover,
-button:hover {
+button:hover,
+.edicion-img .file-label:hover {
     color: rgb(67, 122, 97);
 }
 
@@ -150,9 +148,6 @@ header {
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-}
-
-.tarjetas a {
 }
 
 .tarjeta {
@@ -293,6 +288,29 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* -- Estilos de listado productos -- */
+.edicion-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.edicion-img .file-label {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.edicion-img input {
+    display: none;
+}
+
+.edicion-img .imagen {
+    width: 7.5rem;
+    height: 5rem;
 }
 
 /* -- Estilos del carrito -- */

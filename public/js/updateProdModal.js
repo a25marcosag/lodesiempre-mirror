@@ -3,7 +3,7 @@ const $d = document,
         .querySelector(".tarjetas")
         .querySelectorAll(".btn-update"),
     $formUpdate = $d.getElementById("formUpdateProd"),
-    $formCleanImg = $d.getElementById("formCleanImgProd"),
+    $formCleanImg = $d.querySelector(".btn-quitar-img-prod"),
     $nombreForm = $d.getElementById("nombre_edit"),
     $precioForm = $d.getElementById("precio_edit"),
     $descForm = $d.getElementById("desc_edit");
@@ -15,6 +15,30 @@ $d.addEventListener("DOMContentLoaded", () => {
         let precio = parseFloat(el.textContent);
         el.textContent = precio.toFixed(2) + " €";
     });
+
+    function activarMiniatura(popup, input) {
+        let miniatura = popup.querySelector(".imagen");
+
+        input.addEventListener("change", () => {
+            let file = input.files[0];
+
+            let url = URL.createObjectURL(file);
+
+            miniatura.style.backgroundImage = `url("${url}")`;
+            miniatura.style.display = "block";
+        });
+    }
+
+    let popupTienda = $d.querySelector("#popupTienda");
+    let iconoTiendaForm = $d.getElementById("icono_tienda");
+    let popupUpdateProd = $d.querySelector("#popupUpdate");
+    let imagenUpdateProdForm = $d.getElementById("imagen_edit");
+    let popupAddProd = $d.querySelector("#popupAdd");
+    let imagenAddProdForm = $d.getElementById("imagen_nuevo");
+
+    activarMiniatura(popupTienda, iconoTiendaForm);
+    activarMiniatura(popupUpdateProd, imagenUpdateProdForm);
+    activarMiniatura(popupAddProd, imagenAddProdForm);
     // ^^^ Fin del snippet ^^^
 
     $btnsUpdateProd.forEach((btn) => {
@@ -35,9 +59,14 @@ $d.addEventListener("DOMContentLoaded", () => {
             $formUpdate.action = `/producto/actualizar/${$idTienda}/${$idProd}`;
 
             if ($imagenProd) {
+                popupUpdateProd.querySelector(
+                    ".imagen"
+                ).style.backgroundImage = `url("http://localhost/storage/img/${$imagenProd}")`;
                 $formCleanImg.style.display = "block";
                 $formCleanImg.action = `/producto/limpiar/imagen/${$idTienda}/${$idProd}`;
             } else {
+                popupUpdateProd.querySelector(".imagen").style.backgroundImage =
+                    "";
                 $formCleanImg.style.display = "none";
             }
 

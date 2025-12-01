@@ -34,15 +34,13 @@
             @csrf
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre">
-            <label for="correo">Email</label>
-            <input type="email" name="correo" id="correo">
-            <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password" required>
+            <label for="contrasena">Contraseña</label>
+            <input type="password" name="contrasena" id="contrasena" required>
             <button type="submit">Iniciar sesión</button>
         </form>
         @if($errors->any())
-                <p>{{$errors->first()}}</p>
-            @endif
+            <p>{{$errors->first()}}</p>
+        @endif
         @if(isset($error))
             <p>{{$error}}</p>
         @endif

@@ -66,8 +66,12 @@
             <form method="post" id="formUpdate">
                 @csrf
                 @method('PUT')
-                <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre">
-                <input type="email" name="correo" id="correo_edit" placeholder="Correo electrónico">
+                <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre" required>
+                <input type="email" name="correo" id="correo_edit" placeholder="Correo electrónico"
+                @if(session('usuario_tipo') !== "admin")
+                    required
+                @endif
+                >
                 <button type="submit">Actualizar</button>
             </form>
         </dialog>
