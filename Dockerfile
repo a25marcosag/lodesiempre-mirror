@@ -25,7 +25,8 @@ COPY . /app
 
 RUN composer require resend/resend-laravel
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --no-scripts
+
 
 FROM php:8.2-apache
 
@@ -46,9 +47,14 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 
 WORKDIR /app
+
 COPY --from=build /app /app
+
 RUN mkdir -p database && touch database/database.sqlite
+
 RUN chown -R www-data:www-data /app
+
+RUN php artisan package:discover
 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
