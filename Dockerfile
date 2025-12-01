@@ -25,7 +25,7 @@ COPY . /app
 
 RUN composer require resend/resend-laravel
 
-RUN composer install --no-dev --optimize-autoloader
+RUN composer update --no-dev --optimize-autoloader
 
 FROM php:8.2-apache
 
