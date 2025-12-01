@@ -2,19 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResumenCompra;
 use App\Models\Carrito;
 use App\Models\Producto;
 use App\Models\Tienda;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
-class CarritoController extends Controller
+
+class CarritoController
 {
     public function listarProductosCarrito(){
         $data = [];
         // $carrito = Carrito::where('usuario_id', session('usuario_id'))->first();
         // $data['productos'] = $carrito->productos()->orderBy('nombre', 'asc')->get();
         return view('lista-productos-carrito', $data);
+    }
+
+    public function procesarCompra(){
+        $carrito = Carrito::where('usuario_id', session('usuario_id'))->first();
+
+        $total = $carrito->productos->sum(function($prod) {
+            return $prod->precio * $prod->pivot->cantidad;
+        });
+
+        $msj = "<h1>LoDeSiempre</h1>";
+        $msj .= "<h2>Extracto de compra de " . session('usuario_nombre') . "</h2>";
+        $msj .= "<table border='1'>";
+        $msj .= "<tr><th>Producto</th><th>Cantidad</th><th>Precio Ud.</th><th>Subtotal</th></tr>";
+
+        foreach ($carrito->productos as $prod) {
+            $subtotal = $prod->precio * $prod->pivot->cantidad;
+            $msj .= "<tr>
+                <td>{$prod->nombre}</td>
+                <td>{$prod->pivot->cantidad} uds.</td>
+                <td>{$prod->precio} €</td>
+                <td>{$subtotal} €</td>
+                </tr>";
+        }
+
+        $msj .= "</table>";
+        $msj .= "<p><strong>Total de compra: {$total} €</strong></p>";
+
+        // $usuario = Usuario::find(session('usuario_id'));
+        // $destinatario = "{{$usuario->email}}"
+        $destinatario = "a25marcosag@iessanclemente.net";
+
+        Mail::to($destinatario)->send(new ResumenCompra($msj));
+
+        DB::table('carrito_producto')->where('carrito_id', $carrito->id)->delete();
+
+        session()->flash('success', 'Compra realizada con éxito. Mensaje de confirmación enviado al correo.');
+
+        return $this->listarProductosCarrito();
     }
 
     public function mostrarJsonProductosCarrito(){

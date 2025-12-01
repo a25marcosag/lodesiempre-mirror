@@ -7,7 +7,7 @@ use App\Models\Tienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class ProductoController extends Controller
+class ProductoController
 {
     public function listarProductos($idTienda){
         $data = [];

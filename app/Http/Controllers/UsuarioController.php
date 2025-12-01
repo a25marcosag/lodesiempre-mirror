@@ -8,7 +8,7 @@ use App\Models\Producto;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 
-class UsuarioController extends Controller
+class UsuarioController
 {
     public function listarUsuarios(){
         $vista = 'lista-tiendas';
@@ -29,25 +29,7 @@ class UsuarioController extends Controller
     public function iniciarSesionUsuario(Request $r){
         $data = [];
 
-        $r->validate([
-            'nombre' => 'required_without:correo',
-            'correo' => 'required_without:nombre',
-        ], [
-            'nombre.required_without' => 'Es necesario rellenar nombre y/o correo para identificarse.',
-            'correo.required_without' => 'Es necesario rellenar nombre y/o correo para identificarse.'
-        ]);
-
-        $usuarioEnBD = Usuario::where('contrasena', $r->get('password'));
-
-        if($r->filled('nombre')) {
-            $usuarioEnBD->where('nombre', $r->get('nombre'));
-        }
-
-        if($r->filled('correo')) {
-            $usuarioEnBD->where('email', $r->get('correo'));
-        }
-
-        $usuario = $usuarioEnBD->first();
+        $usuario = Usuario::where('nombre', $r->get('nombre'))->where('contrasena', $r->get('contrasena'))->first();
 
         if ($usuario) {
             session(['usuario_id' => $usuario->id, 'usuario_nombre' => $usuario->nombre, 'usuario_tipo' => $usuario->tipo]);
@@ -81,9 +63,15 @@ class UsuarioController extends Controller
         $vista = '';
         $data = [];
 
+        $r->validate([
+            'contrasena' => 'confirmed'
+        ], [
+            'confirmed' => 'Las contraseñas no coinciden.'
+        ]);
+
         $usuario = new Usuario();
         $usuario->nombre = $r->get('nombre');
-        $usuario->contrasena = $r->get('password');
+        $usuario->contrasena = $r->get('contrasena');
         $usuario->tipo = $r->get('tipo');
         $usuario->email = $r->get('correo');
 

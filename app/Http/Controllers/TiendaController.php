@@ -7,7 +7,7 @@ use App\Models\Tienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class TiendaController extends Controller
+class TiendaController
 {
     public function listarTiendas(Request $r){
         $busqueda = $r->get('busqueda');
