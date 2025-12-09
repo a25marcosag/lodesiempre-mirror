@@ -3,6 +3,7 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y \
     libzip-dev libicu-dev libsqlite3-dev \
     libpng-dev libjpeg-dev libfreetype6-dev \
+    libonig-dev \
  && docker-php-ext-configure gd --with-freetype --with-jpeg \
  && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip intl gd
 
@@ -12,6 +13,7 @@ RUN sed -i 's|/var/www/html|/app/public|g' /etc/apache2/sites-available/000-defa
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 WORKDIR /app
+
 COPY . /app
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
