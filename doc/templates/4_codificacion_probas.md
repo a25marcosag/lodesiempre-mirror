@@ -34,7 +34,7 @@ Ahora la BBDD se rellena de valores de prueba desde un seeder. Proyecto desplega
 
 Todo el comportamiento principal de la página está ahora completo, exceptuando el carrito.
 
-## Prototipo Final
+## Prototipo 3
 
 ### Fecha
 
@@ -47,6 +47,12 @@ Añadido un carrito AJAX que afecta a la BBDD si es de un usuario cliente o se g
 Ahora se pueden subir y borrar imágenes para las tiendas/productos. Añadido botón en el footer para borrar la cuenta del usuario logueado (junto con su tienda/carrito correspondiente).
 
 Diversas mejoras en la lógica del código, así como visuales. Ahora la página tiene diseño responsive.
+
+## Prototipo Final
+
+### Fecha
+
+### Descripción
 
 # Retos e Innovación
 

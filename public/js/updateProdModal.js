@@ -3,7 +3,8 @@ const $d = document,
         .querySelector(".tarjetas")
         .querySelectorAll(".btn-update"),
     $formUpdate = $d.getElementById("formUpdateProd"),
-    $formCleanImg = $d.querySelector(".btn-quitar-img-prod"),
+    $formCleanImg = $d.getElementById("formCleanImgProd"),
+    $btnCleanImg = $d.querySelector(".btn-quitar-img-prod"),
     $nombreForm = $d.getElementById("nombre_edit"),
     $precioForm = $d.getElementById("precio_edit"),
     $descForm = $d.getElementById("desc_edit");
@@ -56,18 +57,24 @@ $d.addEventListener("DOMContentLoaded", () => {
             $precioForm.value = $precioProd;
             $descForm.value = $descProd;
 
+            imagenUpdateProdForm.value = "";
+            popupUpdateProd.querySelector(".imagen").style.backgroundImage = "";
+
             $formUpdate.action = `/producto/actualizar/${$idTienda}/${$idProd}`;
 
             if ($imagenProd) {
                 popupUpdateProd.querySelector(
                     ".imagen"
                 ).style.backgroundImage = `url("http://localhost/storage/img/${$imagenProd}")`;
-                $formCleanImg.style.display = "block";
-                $formCleanImg.action = `/producto/limpiar/imagen/${$idTienda}/${$idProd}`;
+                $btnCleanImg.style.display = "block";
+
+                let rutaQuitarImg = btn.dataset.rutaQuitarImg;
+                rutaQuitarImg = rutaQuitarImg
+                    .replace("ID_TIENDA", $idTienda)
+                    .replace("ID_PROD", $idProd);
+                $formCleanImg.action = rutaQuitarImg;
             } else {
-                popupUpdateProd.querySelector(".imagen").style.backgroundImage =
-                    "";
-                $formCleanImg.style.display = "none";
+                $btnCleanImg.style.display = "none";
             }
 
             window.popupUpdate.showModal();

@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class TiendaController
 {
@@ -32,23 +33,33 @@ class TiendaController
     }
 
     public function updateTienda(Request $r, $idTienda){
+        $data = [];
         $tienda = Tienda::find($idTienda);
-        $tienda->nombre = $r->get('nombre');
-        $tienda->provincia = $r->get('prov');
-        $tienda->descripcion = $r->get('desc');
 
-        if($r->hasFile('icono')) {
-            $icono = $r->file('icono');
-            $nombreIcono = $icono->getClientOriginalName();
+        $validacion = Validator::make($r->all(), [
+            'nombre' => 'unique:tiendas,nombre,' . $idTienda,
+        ]);
 
-            Storage::disk('public')->putFileAs('img', $icono, $nombreIcono);
+        if ($validacion->fails()) {
+            $data['error'] = 'No se pudo actualizar: el nombre ya existe.';
 
-            $tienda->icono = $nombreIcono;
+        } else {
+            $tienda->nombre = $r->get('nombre');
+            $tienda->provincia = $r->get('prov');
+            $tienda->descripcion = $r->get('desc');
+
+            if($r->hasFile('icono')) {
+                $icono = $r->file('icono');
+                $nombreIcono = $icono->getClientOriginalName();
+
+                Storage::disk('public')->putFileAs('img', $icono, $nombreIcono);
+
+                $tienda->icono = $nombreIcono;
+            }
+
+            $tienda->save();
         }
 
-        $tienda->save();
-
-        $data = [];
         $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
         $data['tienda'] = $tienda;
         return view('lista-productos', $data);

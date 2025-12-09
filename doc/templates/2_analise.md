@@ -2,9 +2,9 @@
 
 ## Descripción general
 
-**LoDeSiempre** es una web responsive de compra-venta de productos locales con el propósito de poner en contacto a personas vendedoras con personas consumidoras, en un inicio con rango de operación en las provincias de A Coruña y Pontevedra.<br>
+**LoDeSiempre** es una web responsive de compra-venta de productos locales con el propósito de poner en contacto a personas vendedoras con personas consumidoras, en un inicio con rango de operación en las provincias de A Coruña y Pontevedra.
 
-Las personas consumidoras podrán **consultar catálogos** de tiendas locales y **añadir/quitar sus productos en un carrito de compras digital** para posteriormente realizar **pedidos de recogida en tienda o de entrega a domicilio** (esto último requiere sesión iniciada). Las personas vendedoras podrán **registrar su tienda, modificar su perfil y gestionar sus productos**. El equipo administrador de la web podrá **supervisar y gestionar todos los tipos de cuentas y los stocks de productos** mediante una interfaz administrativa.<br>
+Las personas consumidoras podrán **consultar catálogos** de tiendas locales y **añadir/quitar sus productos en un carrito de compras digital** para posteriormente realizar **pedidos de recogida en tienda o de entrega a domicilio** (esto último requiere sesión iniciada). Las personas vendedoras podrán **registrar su tienda, modificar su perfil y gestionar sus productos**. El equipo administrador de la web podrá **supervisar y gestionar todos los tipos de cuentas y los stocks de productos** mediante una interfaz administrativa.
 
 El objetivo principal de LoDeSiempre es **fomentar el comercio local facilitando la experiencia de compra de la persona usuaria y posicionándose como alternativa a multinacionales de venta global**.
 
@@ -88,7 +88,7 @@ Las funcionalidades del sistema con número identificativo y clasificadas según
 
 ## Normativa
 
-La web, al operar dentro de España, se tendrá que adherir a la legislación vigente sobre protección de datos: la [**Ley Orgánica 3/2018** de 5 de diciembre de **Protección de Datos Personales y garantía de los derechos digitales** (LOPDPGDD)](https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673).<br>
+La web, al operar dentro de España, se tendrá que adherir a la legislación vigente sobre protección de datos: la [**Ley Orgánica 3/2018** de 5 de diciembre de **Protección de Datos Personales y garantía de los derechos digitales** (LOPDPGDD)](https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673).
 
 Para cumplir esta normativa, tanto en el footer como al entrar sin cuenta o al crearse una nueva se proporcionarán:
 

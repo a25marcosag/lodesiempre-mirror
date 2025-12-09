@@ -7,6 +7,7 @@ use App\Models\Tienda;
 use App\Models\Producto;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class UsuarioController
 {
@@ -42,6 +43,33 @@ class UsuarioController
 
                 return view('lista-productos', $data);
             }
+
+            if (session('carrito')) {
+
+                if(session('usuario_tipo') === 'consumidor' && $r->get('transfer') == 1) {
+                    $carrito = Carrito::where('usuario_id', $usuario->id)->first();
+                    $carritoLocal = session('carrito');
+
+                    foreach ($carritoLocal as $prodLocal) {
+                        $prod = $carrito->productos()->where('producto_id', $prodLocal['id'])->first();
+
+                        if ($prod) {
+                            $carrito->productos()->updateExistingPivot($prodLocal['id'], [
+                                'cantidad' => $prod->pivot->cantidad + $prodLocal['cantidad']]);
+
+                        } else {
+                            $carrito->productos()->attach($prodLocal['id'], [
+                                'cantidad' => $prodLocal['cantidad']
+                            ]);
+
+                        }
+                    }
+
+                    session()->forget('carrito');
+                }
+
+            }
+
         } else {
             return redirect()->back()->withErrors('No se ha encontrado ese usuario. Inténtelo de nuevo.');
         }
@@ -99,8 +127,16 @@ class UsuarioController
                 if ($usuario->tipo === 'consumidor') {
                     $carrito = new Carrito();
                     $carrito->usuario_id = $usuario->id;
-
                     $carrito->save();
+
+                    if (session('carrito')) {
+                        $carritoLocal = session('carrito');
+                        foreach ($carritoLocal as $prodLocal) {
+                            $carrito->productos()->attach($prodLocal['id'], [
+                                'cantidad' => $prodLocal['cantidad']
+                            ]);
+                        }
+                    }
                 }
 
                 return $this->iniciarSesionUsuario($r);
@@ -116,12 +152,22 @@ class UsuarioController
 
     public function updateUsuario(Request $r, $id){
         $usuario = Usuario::find($id);
+
+        $validacion = Validator::make($r->all(), [
+            'nombre' => 'unique:usuarios,nombre,' . $id,
+            'correo' => 'unique:usuarios,email,' . $id,
+        ]);
+
+        if ($validacion->fails()) {
+            return redirect()->back()->withErrors('No se pudo actualizar: el nombre de usuario y/o el correo electrónico ya están en uso.');
+        }
+
         $usuario->nombre = $r->get('nombre');
         $usuario->email = $r->get('correo');
 
         $usuario->save();
 
-        return $this->listarUsuarios();
+        return redirect()->route('listar_usuarios');
     }
 
     public function deleteUsuario($id){

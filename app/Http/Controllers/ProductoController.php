@@ -63,7 +63,11 @@ class ProductoController
 
         $producto->save();
 
-        return $this->listarProductos($idTienda);
+        $data = [];
+        $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
+        $tienda = Tienda::find($idTienda);
+        $data['tienda'] = $tienda;
+        return view('lista-productos', $data);
     }
 
     public function deleteProducto($idTienda, $idProd){

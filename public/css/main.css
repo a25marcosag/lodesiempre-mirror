@@ -29,7 +29,7 @@ body {
     flex-direction: column;
     align-items: center;
     background: var(--gradiente-fondo);
-    color: #222;
+    color: #284437;
     text-align: justify;
 }
 
@@ -44,8 +44,8 @@ h1,
 h2,
 h3 {
     color: rgb(113, 230, 175);
-    text-shadow: -1.5px -1.5px 0 darkslategrey, 1.5px -1.5px 0 darkslategrey,
-        -1.5px 1.5px 0 darkslategrey, 1.5px 1.5px 0 darkslategrey;
+    text-shadow: -1px -1px 0 darkslategrey, 1px -1px 0 darkslategrey,
+        -1px 1px 0 darkslategrey, 1px 1px 0 darkslategrey;
     text-align: center;
     font-family: "Inter", sans-serif;
     font-weight: 700;
@@ -62,7 +62,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
 }
 
 a {
@@ -117,6 +117,8 @@ header {
     gap: 0.5rem;
     padding: 0.5rem;
     background-color: lightblue;
+    border-bottom: 1px solid white;
+    z-index: 1;
 }
 
 .logo {
@@ -126,6 +128,7 @@ header {
 .menu {
     display: flex;
     flex-wrap: wrap;
+    font-size: 1.2rem;
     gap: 1rem;
 }
 
@@ -143,24 +146,26 @@ header {
 
 .tarjetas {
     padding: 0.5rem;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(auto, 350px));
+    grid-auto-rows: 1fr;
     justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1rem;
+    width: 100%;
 }
 
 .tarjeta {
-    padding: 1rem;
+    padding: 1.5rem;
     background-color: rgba(173, 216, 230, 0.25);
     border: 1px solid white;
     box-shadow: 0 0 15px white inset;
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     gap: 0.5rem;
+    height: 100%;
 }
 
 .tarjeta-titulo {
@@ -168,6 +173,12 @@ header {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+    flex: 1;
+}
+
+.precio-tarjeta,
+.precio-total {
+    font-weight: 600;
 }
 
 svg {
@@ -180,6 +191,9 @@ svg {
     background-position: center;
     width: 15rem;
     height: 10rem;
+    border: 2px solid white;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 5px darkslategrey inset;
 }
 
 .btn-modal,
@@ -190,6 +204,27 @@ svg {
     border: 1px solid darkolivegreen;
     border-radius: 0.5rem;
     padding: 0.5rem;
+}
+
+.btn-modal:hover,
+.form-session button:hover,
+.btn-add-carrito:hover,
+.btn-vaciar:hover,
+.btn-comprar:hover,
+dialog
+    form
+    button:not([form="formCleanImgTienda"]):not(
+        [form="formCleanImgProd"]
+    ):hover {
+    font-weight: 600;
+    animation: pulse;
+    -webkit-animation: pulse;
+    -moz-animation: pulse;
+    -o-animation: pulse;
+    animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -o-animation-duration: 1s;
 }
 
 dialog::backdrop {
@@ -203,13 +238,16 @@ dialog[open] {
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     padding: 2rem;
     gap: 1rem;
     border: 3px solid darkolivegreen;
     line-height: 1.6;
     font-weight: 400;
+}
+
+dialog[open]:not(#popupAviso) {
+    justify-content: center;
 }
 
 dialog .btn-cerrar {
@@ -235,8 +273,11 @@ dialog form > * {
     width: auto;
 }
 
-dialog form button:hover {
+dialog form button {
     background: rgb(227, 248, 255);
+}
+
+dialog form button:hover {
     outline-color: darkolivegreen;
 }
 
@@ -249,6 +290,7 @@ footer {
     gap: 1rem;
     padding: 1rem;
     background-color: lightblue;
+    border-top: 1px solid white;
     font-size: 0.8rem;
 }
 
@@ -275,13 +317,18 @@ footer {
         gap: 4rem;
         padding: 3rem;
     }
+
+    .imagen-principal {
+        width: 22.5rem;
+        height: 15rem;
+    }
 }
 
 /* -- Estilos de Home -- */
 .form-busq {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.1rem;
+    gap: 0.5rem;
 }
 
 .form-busq button {
@@ -291,6 +338,18 @@ footer {
 }
 
 /* -- Estilos de listado productos -- */
+.btn-mas {
+    width: 100%;
+    font-size: 8rem;
+    color: rgb(113, 230, 175);
+    text-shadow: -1px -1px 0 darkslategrey, 1px -1px 0 darkslategrey,
+        -1px 1px 0 darkslategrey, 1px 1px 0 darkslategrey;
+    text-align: center;
+    font-weight: 600;
+    background: none;
+    border: none;
+}
+
 .edicion-img {
     display: flex;
     justify-content: center;
@@ -313,10 +372,14 @@ footer {
     height: 5rem;
 }
 
+.edicion-img button {
+    background: none;
+}
+
 /* -- Estilos del carrito -- */
 .btn-borrar {
     cursor: pointer;
-    margin: auto 0 auto auto;
+    align-self: flex-end;
 }
 
 .btn-borrar .bin-open {
@@ -341,17 +404,16 @@ footer {
     font-weight: 700;
 }
 
-.btns-prod-cart > * {
+.btn-sumar {
+    color: lightgreen;
     text-shadow: -2px -2px 0 #6e866e, 2px -2px 0 #6e866e, -2px 2px 0 #6e866e,
         2px 2px 0 #6e866e;
 }
 
-.btn-sumar {
-    color: lightgreen;
-}
-
 .btn-restar {
     color: lightcoral;
+    text-shadow: -2px -2px 0 #6e866e, 2px -2px 0 #6e866e, -2px 2px 0 #6e866e,
+        2px 2px 0 #6e866e;
 }
 
 .sin-prod {
@@ -378,7 +440,14 @@ footer {
     border: 1px solid darkolivegreen;
 }
 
-.form-session button:hover {
+.form-session button {
     background: rgb(227, 248, 255);
+}
+
+.form-session button:hover {
     outline-color: darkolivegreen;
+}
+
+.btn-login {
+    margin-top: 2rem;
 }

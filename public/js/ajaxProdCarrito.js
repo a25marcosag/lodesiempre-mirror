@@ -39,8 +39,11 @@ function renderProductos(productos) {
         $d.querySelector(".total-compra").innerHTML = "";
         $d.querySelector(".btn-vaciar").remove();
         $d.querySelector(".btn-comprar").remove();
-        $listaProd.innerHTML =
-            "<p class='sin-prod'>¡Vaya! Tu carrito está vacío.</p>";
+        $listaProd.innerHTML = "";
+        $listaProd.insertAdjacentHTML(
+            "afterend",
+            "<p class='sin-prod'>¡Vaya! Tu carrito está vacío.</p>"
+        );
 
         return;
     }
@@ -64,9 +67,9 @@ function renderProductos(productos) {
                 actual.cantidad
             )}</h2>
                 </p>
-                <p>${Number(actual.precio * actual.cantidad).toFixed(
-                    2
-                )} € (${Number(actual.precio).toFixed(2)} €/Ud.)</p>
+                <p class="precio-tarjeta">${Number(
+                    actual.precio * actual.cantidad
+                ).toFixed(2)} € (${Number(actual.precio).toFixed(2)} €/Ud.)</p>
                 ${actual.descripcion ? `<p>${actual.descripcion}</p>` : ""}
                 ${urlImagenProd}
                 <p class="btns-prod-cart">
