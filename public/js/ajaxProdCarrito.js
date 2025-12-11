@@ -38,7 +38,7 @@ function renderProductos(productos) {
     if (productos.length === 0) {
         $d.querySelector(".total-compra").innerHTML = "";
         $d.querySelector(".btn-vaciar").remove();
-        $d.querySelector(".btn-comprar").remove();
+        $d.querySelector(".form-comprar").remove();
         $listaProd.innerHTML = "";
         $listaProd.insertAdjacentHTML(
             "afterend",

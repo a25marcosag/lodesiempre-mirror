@@ -41,7 +41,7 @@ class TiendaController
         ]);
 
         if ($validacion->fails()) {
-            $data['error'] = 'No se pudo actualizar: el nombre ya existe.';
+            $data['error'] = 'No se pudo actualizar: El nombre ya existe.';
 
         } else {
             $tienda->nombre = $r->get('nombre');
@@ -59,6 +59,23 @@ class TiendaController
 
             $tienda->save();
         }
+
+        $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
+        $data['tienda'] = $tienda;
+        return view('lista-productos', $data);
+    }
+
+    public function updateVerifTienda($idTienda){
+        $data = [];
+        $tienda = Tienda::find($idTienda);
+
+        if ($tienda->verif == 1) {
+            $tienda->verif = 0;
+        } else {
+            $tienda->verif = 1;
+        }
+
+        $tienda->save();
 
         $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
         $data['tienda'] = $tienda;

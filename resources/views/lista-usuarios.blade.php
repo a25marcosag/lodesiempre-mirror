@@ -11,11 +11,11 @@
         :root {
             --gradiente-fondo: linear-gradient(
                 to bottom left,
-                rgb(227, 248, 255) 0%,
-                rgb(227, 248, 255) 30%,
+                var(--color-principal) 0%,
+                var(--color-principal) 30%,
                 rgb(168, 202, 241) 50%,
-                rgb(227, 248, 255) 70%,
-                rgb(227, 248, 255) 100%
+                var(--color-principal) 70%,
+                var(--color-principal) 100%
             );
         }
     </style>
@@ -25,6 +25,19 @@
     <header>
         <h1>LoDeSiempre</h1>
         <a class="logo" href="{{route('listar_tiendas')}}"><img src="{{asset('storage/img/logo.png')}}" alt="LoDeSiempre"></a>
+        <form action="{{route('listar_usuarios')}}" method="get" class="form-busq">
+            @csrf
+            <input type="text" name="busqueda" id="busqueda" value="{{$busqueda ?? ''}}" placeholder="Buscar usuario...">
+            <select name="tipo" id="tipo">
+                <option value="Todos" {{($tipo ?? '') == 'Todos' ? 'selected' : ''}}>Todos</option>
+                <option value="admin" {{($tipo ?? '') == 'admin' ? 'selected' : ''}}>Admin</option>
+                <option value="vendedor" {{($tipo ?? '') == 'vendedor' ? 'selected' : ''}}>Vendedor</option>
+                <option value="consumidor" {{($tipo ?? '') == 'consumidor' ? 'selected' : ''}}>Consumidor</option>
+            </select>
+            <button type="submit">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="rgb(67, 122, 97)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+            </button>
+        </form>
         <nav>
             <ul class="menu">
                 @if(session('usuario_id'))
@@ -67,12 +80,8 @@
             <form method="post" id="formUpdate">
                 @csrf
                 @method('PUT')
-                <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre" required>
-                <input type="email" name="correo" id="correo_edit" placeholder="Correo electrónico"
-                @if(session('usuario_tipo') !== "admin")
-                    required
-                @endif
-                >
+                <input type="text" name="nombre" id="nombre_edit" placeholder="Nombre" maxlength="30" required>
+                <input type="email" name="correo" id="correo_edit" placeholder="Correo electrónico" maxlength="255">
                 <button type="submit">Actualizar</button>
             </form>
         </dialog>
@@ -125,7 +134,7 @@
     </footer>
     @if($errors->any())
         <script>
-            alert("{{$errors->first()}}");
+            alert("No se pudo actualizar: " + "{{$errors->first()}}");
         </script>
     @endif
 </body>

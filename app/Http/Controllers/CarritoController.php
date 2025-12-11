@@ -21,15 +21,18 @@ class CarritoController
         return view('lista-productos-carrito', $data);
     }
 
-    public function procesarCompra(){
+    public function procesarCompra(Request $r){
         $carrito = Carrito::where('usuario_id', session('usuario_id'))->first();
 
         $total = $carrito->productos->sum(function($prod) {
             return $prod->precio * $prod->pivot->cantidad;
         });
 
+        $envio = $r->get('envio');
+
         $msj = "<h1>LoDeSiempre</h1>";
         $msj .= "<h2>Extracto de compra de " . session('usuario_nombre') . "</h2>";
+        $msj .= "<p>Método de entrega: " . $envio . "</p>";
         $msj .= "<table border='1'>";
         $msj .= "<tr><th>Producto</th><th>Cantidad</th><th>Precio Ud.</th><th>Subtotal</th></tr>";
 

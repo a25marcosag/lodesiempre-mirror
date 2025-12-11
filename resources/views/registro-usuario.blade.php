@@ -12,7 +12,7 @@
                 to bottom left,
                 rgb(168, 223, 241) 0%,
                 rgb(168, 223, 241) 30%,
-                rgb(227, 248, 255) 50%,
+                var(--color-principal) 50%,
                 rgb(168, 223, 241) 70%,
                 rgb(168, 223, 241) 100%
             );
@@ -34,18 +34,18 @@
         <form class="form-session" action="{{route('add_usuario_registro')}}" method="post">
             @csrf
             <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre" required>
+            <input type="text" name="nombre" id="nombre" maxlength="30" required>
             <label for="contrasena">Contraseña</label>
-            <input type="password" name="contrasena" id="contrasena" required>
+            <input type="password" name="contrasena" id="contrasena" minlength="4" maxlength="30" required>
             <label for="contrasena_confirmation">Confirmación de contraseña</label>
-            <input type="password" name="contrasena_confirmation" id="contrasena_confirmation" required>
+            <input type="password" name="contrasena_confirmation" id="contrasena_confirmation" minlength="4" maxlength="30" required>
             <label for="tipos">Elegir tipo de cuenta</label>
             <select name="tipo" id="tipo">
                 <option value="consumidor">Cliente</option>
                 <option value="vendedor">Tienda</option>
             </select>
             <label for="correo">Email</label>
-            <input type="email" name="correo" id="correo" required>
+            <input type="email" name="correo" id="correo" maxlength="255" required>
             <button type="submit" class="btn-login">Registrarse</button>
         </form>
         @if($errors->any())

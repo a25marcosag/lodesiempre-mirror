@@ -10,9 +10,29 @@ use Illuminate\Support\Facades\Storage;
 class ProductoController
 {
     public function listarProductos($idTienda){
+        $r = request();
+        $busqueda = $r->get('busqueda');
+        $orden = $r->get('orden');
+
+        $productos = Producto::where('tienda_id', $idTienda);
+
+        if($busqueda) {
+            $productos = $productos->where('nombre', 'LIKE', "%{$busqueda}%");
+        }
+
+        if($orden && $orden !== 'Alfabéticamente') {
+            if ($orden === 'Precio (asc.)') {
+                $productos = $productos->orderBy('precio', 'asc');
+            } else {
+                $productos = $productos->orderBy('precio', 'desc');
+            }
+        }
+
         $data = [];
-        $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
         $data['tienda'] = Tienda::find($idTienda);
+        $data['productos'] = $productos->orderBy('nombre', 'asc')->get();
+        $data['busqueda'] = $busqueda;
+        $data['orden'] = $orden;
         return view('lista-productos', $data);
     }
 

@@ -12,7 +12,7 @@
                 to bottom left,
                 rgb(168, 223, 241) 0%,
                 rgb(168, 223, 241) 30%,
-                rgb(227, 248, 255) 50%,
+                var(--color-principal) 50%,
                 rgb(168, 223, 241) 70%,
                 rgb(168, 223, 241) 100%
             );
@@ -34,9 +34,9 @@
         <form class="form-session" action="{{route('iniciar_sesion_usuario')}}" method="post">
             @csrf
             <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre">
+            <input type="text" name="nombre" id="nombre" maxlength="30">
             <label for="contrasena">Contraseña</label>
-            <input type="password" name="contrasena" id="contrasena" required>
+            <input type="password" name="contrasena" id="contrasena" minlength="4" maxlength="30" required>
             <input type="hidden" name="transfer" id="transfer" value="0">
             <button type="submit" class="btn-login">Iniciar sesión</button>
         </form>

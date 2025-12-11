@@ -13,11 +13,11 @@
         :root {
             --gradiente-fondo: linear-gradient(
                 to bottom left,
-                rgb(227, 248, 255) 0%,
-                rgb(227, 248, 255) 30%,
+                var(--color-principal) 0%,
+                var(--color-principal) 30%,
                 rgb(168, 202, 241) 50%,
-                rgb(227, 248, 255) 70%,
-                rgb(227, 248, 255) 100%
+                var(--color-principal) 70%,
+                var(--color-principal) 100%
             );
         }
     </style>
@@ -48,15 +48,26 @@
             <button onclick="borrarProductos()" class="btn-vaciar" aria-label="Borrar el carrito entero">
                 Vaciar carrito
             </button>
-            <a href="{{session('usuario_id') ? route('procesar_compra') : route('inicio_sesion_usuario')}}" class="btn-comprar" aria-label="Ir a pago de la compra"
+            <form class="form-comprar" action="{{session('usuario_id') ? route('procesar_compra') : route('inicio_sesion_usuario')}}" method="post">
+                @csrf
+                @method('GET')
+                <p>
+                    <label for="envio">Método de envío: </label>
+                    <select name="envio" id="envio" required>
+                        <option value="recogida en tienda">Recogida en tienda</option>
+                        <option value="entrega a domicilio">Entrega a domicilio</option>
+                    </select>
+                </p>
+                <button type="submit" class="btn-comprar"
                     @if( session('usuario_id') === null )
                         onclick="return confirm('Para realizar la compra es necesario iniciar sesión.')"
                     @else
                         onclick="return confirm('¿Confirmar compra?')"
                     @endif
                     >
-                Comprar
-            </a>
+                    Comprar
+                </button>
+            </form>
         @endif
         <dialog id="popupAviso" class="dialog">
             <a href="#" onclick="window.popupAviso.close();" class="btn-cerrar" aria-label="Cerrar ventana del aviso legal">X</a>

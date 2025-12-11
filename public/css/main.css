@@ -11,13 +11,19 @@
     font-family: "Open Sans", sans-serif;
     line-height: 1.6;
     font-weight: 400;
+    --color-principal: rgb(227, 248, 255);
+    --color-principal-oscuro: lightblue;
+    --color-secundario: rgb(113, 230, 175);
+    --color-secundario-oscuro: rgb(67, 122, 97);
+    --color-texto: rgb(40, 68, 55);
+    --color-sombras: darkslategrey;
     --gradiente-fondo: linear-gradient(
         to bottom left,
-        rgb(227, 248, 255) 0%,
-        rgb(227, 248, 255) 30%,
+        var(--color-principal) 0%,
+        var(--color-principal) 30%,
         rgb(168, 223, 241) 50%,
-        rgb(227, 248, 255) 70%,
-        rgb(227, 248, 255) 100%
+        var(--color-principal) 70%,
+        var(--color-principal) 100%
     );
 }
 
@@ -29,7 +35,7 @@ body {
     flex-direction: column;
     align-items: center;
     background: var(--gradiente-fondo);
-    color: #284437;
+    color: var(--color-texto);
     text-align: justify;
 }
 
@@ -43,9 +49,10 @@ svg {
 h1,
 h2,
 h3 {
-    color: rgb(113, 230, 175);
-    text-shadow: -1px -1px 0 darkslategrey, 1px -1px 0 darkslategrey,
-        -1px 1px 0 darkslategrey, 1px 1px 0 darkslategrey;
+    color: var(--color-secundario);
+    text-shadow: -1px -1px 0 var(--color-sombras),
+        1px -1px 0 var(--color-sombras), -1px 1px 0 var(--color-sombras),
+        1px 1px 0 var(--color-sombras);
     text-align: center;
     font-family: "Inter", sans-serif;
     font-weight: 700;
@@ -81,7 +88,7 @@ button {
 a:hover,
 button:hover,
 .edicion-img .file-label:hover {
-    color: rgb(67, 122, 97);
+    color: var(--color-secundario-oscuro);
 }
 
 ul {
@@ -89,7 +96,7 @@ ul {
 }
 
 select {
-    background: rgb(227, 248, 255);
+    background: var(--color-principal);
 }
 
 input,
@@ -102,8 +109,8 @@ select {
 input:focus,
 select:focus,
 textarea:focus {
-    background: rgb(227, 248, 255);
-    outline-color: darkolivegreen;
+    background: var(--color-principal);
+    outline-color: var(--color-secundario-oscuro);
 }
 
 header {
@@ -116,7 +123,7 @@ header {
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem;
-    background-color: lightblue;
+    background-color: var(--color-principal-oscuro);
     border-bottom: 1px solid white;
     z-index: 1;
 }
@@ -193,21 +200,23 @@ svg {
     height: 10rem;
     border: 2px solid white;
     border-radius: 0.25rem;
-    box-shadow: 0 0 5px darkslategrey inset;
+    box-shadow: 0 0 5px var(--color-sombras) inset;
 }
 
 .btn-modal,
 .btn-add-carrito,
 .btn-vaciar,
-.btn-comprar {
-    background: rgb(227, 248, 255);
-    border: 1px solid darkolivegreen;
+.btn-comprar,
+.btn-verif {
+    background: var(--color-principal);
+    border: 1px solid var(--color-secundario-oscuro);
     border-radius: 0.5rem;
     padding: 0.5rem;
 }
 
 .btn-modal:hover,
 .form-session button:hover,
+.btn-verif:hover,
 .btn-add-carrito:hover,
 .btn-vaciar:hover,
 .btn-comprar:hover,
@@ -217,6 +226,7 @@ dialog
         [form="formCleanImgProd"]
     ):hover {
     font-weight: 600;
+    border-width: 2px;
     animation: pulse;
     -webkit-animation: pulse;
     -moz-animation: pulse;
@@ -241,7 +251,7 @@ dialog[open] {
     align-items: center;
     padding: 2rem;
     gap: 1rem;
-    border: 3px solid darkolivegreen;
+    border: 3px solid var(--color-secundario-oscuro);
     line-height: 1.6;
     font-weight: 400;
 }
@@ -268,17 +278,17 @@ dialog form {
 
 dialog form > * {
     padding: 0.5rem;
-    border: 1px solid darkolivegreen;
+    border: 1px solid var(--color-secundario-oscuro);
     border-radius: 0.5rem;
     width: auto;
 }
 
 dialog form button {
-    background: rgb(227, 248, 255);
+    background: var(--color-principal);
 }
 
 dialog form button:hover {
-    outline-color: darkolivegreen;
+    outline-color: var(--color-secundario-oscuro);
 }
 
 footer {
@@ -289,7 +299,7 @@ footer {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background-color: lightblue;
+    background-color: var(--color-principal-oscuro);
     border-top: 1px solid white;
     font-size: 0.8rem;
 }
@@ -341,9 +351,10 @@ footer {
 .btn-mas {
     width: 100%;
     font-size: 8rem;
-    color: rgb(113, 230, 175);
-    text-shadow: -1px -1px 0 darkslategrey, 1px -1px 0 darkslategrey,
-        -1px 1px 0 darkslategrey, 1px 1px 0 darkslategrey;
+    color: var(--color-secundario);
+    text-shadow: -1px -1px 0 var(--color-sombras),
+        1px -1px 0 var(--color-sombras), -1px 1px 0 var(--color-sombras),
+        1px 1px 0 var(--color-sombras);
     text-align: center;
     font-weight: 600;
     background: none;
@@ -406,14 +417,27 @@ footer {
 
 .btn-sumar {
     color: lightgreen;
-    text-shadow: -2px -2px 0 #6e866e, 2px -2px 0 #6e866e, -2px 2px 0 #6e866e,
-        2px 2px 0 #6e866e;
+    text-shadow: -2px -2px 0 var(--color-secundario-oscuro),
+        2px -2px 0 var(--color-secundario-oscuro),
+        -2px 2px 0 var(--color-secundario-oscuro),
+        2px 2px 0 var(--color-secundario-oscuro);
 }
 
 .btn-restar {
     color: lightcoral;
-    text-shadow: -2px -2px 0 #6e866e, 2px -2px 0 #6e866e, -2px 2px 0 #6e866e,
-        2px 2px 0 #6e866e;
+    text-shadow: -2px -2px 0 var(--color-secundario-oscuro),
+        2px -2px 0 var(--color-secundario-oscuro),
+        -2px 2px 0 var(--color-secundario-oscuro),
+        2px 2px 0 var(--color-secundario-oscuro);
+}
+
+.form-comprar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
 }
 
 .sin-prod {
@@ -437,15 +461,15 @@ footer {
 }
 
 .form-session > *:not(label) {
-    border: 1px solid darkolivegreen;
+    border: 1px solid var(--color-secundario-oscuro);
 }
 
 .form-session button {
-    background: rgb(227, 248, 255);
+    background: var(--color-principal);
 }
 
 .form-session button:hover {
-    outline-color: darkolivegreen;
+    outline-color: var(--color-secundario-oscuro);
 }
 
 .btn-login {

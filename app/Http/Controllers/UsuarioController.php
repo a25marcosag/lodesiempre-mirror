@@ -16,8 +16,25 @@ class UsuarioController
         $data = ['tiendas' => Tienda::query()->orderBy('verif', 'desc')->orderBy('nombre', 'asc')->get()];
 
         if (session('usuario_tipo') === 'admin') {
+            $r = request();
+            $busqueda = $r->get('busqueda');
+            $tipo = $r->get('tipo');
+
+            $usuarios = Usuario::query()->orderBy('nombre', 'asc');
+
+            if($busqueda) {
+                $usuarios = $usuarios->where('nombre', 'LIKE', "%{$busqueda}%");
+            }
+
+            if($tipo && $tipo !== 'Todos') {
+                $usuarios = $usuarios->where('tipo', $tipo);
+            }
+
+            $data = [];
+            $data['usuarios'] = $usuarios->get();
+            $data['busqueda'] = $busqueda;
+            $data['tipo'] = $tipo;
             $vista = 'lista-usuarios';
-            $data = ['usuarios' => Usuario::all()];
         }
 
         return view($vista, $data);
@@ -152,14 +169,15 @@ class UsuarioController
 
     public function updateUsuario(Request $r, $id){
         $usuario = Usuario::find($id);
+        $required = $usuario->tipo === 'admin' ? 'nullable' : 'required';
 
         $validacion = Validator::make($r->all(), [
             'nombre' => 'unique:usuarios,nombre,' . $id,
-            'correo' => 'unique:usuarios,email,' . $id,
+            'correo' => $required . '|email|unique:usuarios,email,' . $id,
         ]);
 
         if ($validacion->fails()) {
-            return redirect()->back()->withErrors('No se pudo actualizar: el nombre de usuario y/o el correo electrónico ya están en uso.');
+            return redirect()->back()->withErrors($validacion);
         }
 
         $usuario->nombre = $r->get('nombre');
