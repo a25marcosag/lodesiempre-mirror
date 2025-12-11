@@ -13,11 +13,11 @@
         :root {
             --gradiente-fondo: linear-gradient(
                 to bottom left,
-                var(--color-principal) 0%,
-                var(--color-principal) 30%,
+                rgb(227, 248, 255) 0%,
+                rgb(227, 248, 255) 30%,
                 rgb(168, 202, 241) 50%,
-                var(--color-principal) 70%,
-                var(--color-principal) 100%
+                rgb(227, 248, 255) 70%,
+                rgb(227, 248, 255) 100%
             );
         }
     </style>
