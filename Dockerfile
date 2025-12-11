@@ -5,8 +5,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     unzip curl git libzip-dev libonig-dev libsqlite3-dev \
     libxml2-dev zlib1g-dev libicu-dev libpng-dev libjpeg-dev libfreetype6-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip intl gd
+ && docker-php-ext-configure gd --with-freetype --with-jpeg \
+ && docker-php-ext-install pdo_mysql pdo_sqlite mbstring zip intl gd bcmath
 
 RUN a2enmod rewrite
 
