@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SolicitudVerif;
 use App\Models\Producto;
 use App\Models\Tienda;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -91,6 +93,23 @@ class TiendaController
         $data = [];
         $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
         $data['tienda'] = $tienda;
+        return view('lista-productos', $data);
+    }
+
+    public function solicitarVerifTienda($idTienda){
+        $tienda = Tienda::find($idTienda);
+
+        $msj = "<h1>LoDeSiempre</h1>";
+        $msj .= "<p>La tienda " . $tienda->nombre . " ha solicitado la validación.</p>";
+
+        $destinatario = "a25marcosag@iessanclemente.net";
+
+        Mail::to($destinatario)->send(new SolicitudVerif($msj));
+
+        $data = [];
+        $data['productos'] = Producto::where('tienda_id', $idTienda)->orderBy('nombre', 'asc')->get();
+        $data['tienda'] = $tienda;
+        $data['solicitud'] = "Solicitud de verificación enviada correctamente.";
         return view('lista-productos', $data);
     }
 }

@@ -80,19 +80,34 @@
         <p>{{$tienda->descripcion}}</p>
         @if(session('usuario_tipo') === "vendedor" || session('usuario_tipo') === "admin")
             <a href="#" onclick="window.popupTienda.showModal();" class="btn-modal" aria-label="Abrir ventana de edición de tienda">Editar</a>
-            @if(session('usuario_tipo') === "vendedor")
-                <form class="form-verif" action="{{route('update_verif_tienda', ['idTienda' => $tienda->id])}}" method="post">
+            @if(isset($solicitud))
+                <p>{{$solicitud}}</p>
+            @else
+                @if(session('usuario_tipo') === "vendedor" && !$tienda->verif)
+                    <form class="form-verif" action="{{route('solicitar_verif_tienda', ['idTienda' => $tienda->id])}}" method="get">
+                @else
+                    <form class="form-verif" action="{{route('update_verif_tienda', ['idTienda' => $tienda->id])}}" method="post">
                     @csrf
                     @method('PUT')
-                    <button type="submit" class="btn-submit btn-verif"
-                    @if($tienda->verif)
-                        onclick="return confirm('¿Seguro que quieres cancelar tu verificación?')">
-                        Cancelar
+                @endif
+                    @if(session('usuario_tipo') === "vendedor")
+                        @if($tienda->verif)
+                            <button type="submit" class="btn-submit btn-verif" onclick="return confirm('¿Seguro que quieres cancelar tu verificación?')">
+                                Cancelar verificación
+                            </button>
+                        @else
+                            <button type="submit" class="btn-submit btn-verif" onclick="return confirm('¿Seguro que quieres apuntarte?')">
+                                Solicitar verificación
+                            </button>
+                        @endif
                     @else
-                        onclick="return confirm('¿Seguro que quieres apuntarte?')">
-                        Apuntarse a la
+                        @if(!$tienda->verif)
+                            <button type="submit" class="btn-submit btn-verif">
+                                Añadirle verificación
+                            </button>
+                        @endif
                     @endif
-                    verificación</button>
+
                 </form>
             @endif
         @endif
@@ -162,6 +177,9 @@
                             data-desc="{{$p->descripcion}}"
                             data-tienda="{{$p->tienda_id}}"
                             data-imagen="{{$p->imagen}}"
+                            @if($p->imagen)
+                                data-ruta-img="url({{$nombreImagenProd}})"
+                            @endif
                             data-ruta-quitar-img="{{route('limpiar_imagen_producto', ['idTienda' => 'ID_TIENDA', 'idProd' => 'ID_PROD'])}}">
                             Editar
                         </a>

@@ -63,9 +63,9 @@ $d.addEventListener("DOMContentLoaded", () => {
             $formUpdate.action = `/producto/actualizar/${$idTienda}/${$idProd}`;
 
             if ($imagenProd) {
-                popupUpdateProd.querySelector(
-                    ".imagen"
-                ).style.backgroundImage = `url("http://localhost/storage/img/${$imagenProd}")`;
+                let rutaImg = btn.dataset.rutaImg;
+                popupUpdateProd.querySelector(".imagen").style.backgroundImage =
+                    rutaImg;
                 $btnCleanImg.style.display = "block";
 
                 let rutaQuitarImg = btn.dataset.rutaQuitarImg;

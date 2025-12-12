@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/',[TiendaController::class, 'listarTiendas'])->name('listar_tiendas');
 Route::put('tienda/actualizar/{idTienda}',[TiendaController::class, 'updateTienda'])->name('update_tienda');
 Route::put('tienda/actualizar/verif/{idTienda}',[TiendaController::class, 'updateVerifTienda'])->name('update_verif_tienda');
+Route::get('tienda/solicitar/verif/{idTienda}',[TiendaController::class, 'solicitarVerifTienda'])->name('solicitar_verif_tienda');
 Route::put('tienda/limpiar/icono/{idTienda}',[TiendaController::class, 'cleanIconoFromTienda'])->name('limpiar_icono_tienda');
 
 Route::get('producto/listar/{idTienda}',[ProductoController::class, 'listarProductos'])->name('listar_productos');
